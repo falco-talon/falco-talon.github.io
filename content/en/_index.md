@@ -17,9 +17,11 @@ title: Falco Talon
 
 
 {{% blocks/lead color="primary" %}}
-The Falco Talon project is a community-driven no-code solution to create a fully customisable reponse engine to work in pair with Falco, the runtime security component. 
+The **Falco Talon** project is a community-driven **no-code solution** to create a **fully customisable reponse engine** to work in pair with **Falco**, the runtime security component. 
 
-It allows you to run series of actions following the name, the priority, the tags, the fields and more of the received Falco events. Falco Talon comes with multiple pre-integrated actions allowing you to focus on your rules and parameters and not on writing code.
+![falco-talon-schema.png](/images/falco-talon-schema.png)
+
+It allows you to run series of actions following the name, the priority, the tags, the fields and more of the received Falco events. Falco Talon comes with multiple **pre-integrated actions** allowing you to focus on your rules and parameters and not on writing code.
 {{% /blocks/lead %}}
 
 
