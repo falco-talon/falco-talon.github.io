@@ -1,8 +1,7 @@
 ---
 title: Concepts
 weight: 2
-description: >
-  What does your user need to understand about your project in order to use it - or potentially contribute to it?
+description: Understand the concepts of Falco Talon
 ---
 
 # Concepts
@@ -34,10 +33,24 @@ or
 └──────────┘      └─────────────┘
 ```
 
-## Glossary
+## Keywords
 
-* `event`: an event detected by `Falco` and sent to its outputs
-* `rule`: defines criterias for linking the events with the actions to apply
-* `action`: each rule can sequentially run actions, each action refers to an actionner
-* `actionner`: defines what to the action will do
-* `notifier`: defines what outputs to notify with the result of the action
+### Event
+
+Represent a possible threat or suspicious action detected by `Falco` and sent to its outputs.
+
+### Rule
+
+The rule define the criterias for linking the events with the actions to run.
+
+### Action
+
+Each rule can sequentially run actions, each action refers to an actionner.
+
+### Actionner
+
+It defines what to the action will do.
+
+### Notifier
+
+It defines what outputs to notify with the result of the action.
