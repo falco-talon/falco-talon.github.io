@@ -71,12 +71,16 @@ The rules files contain 2 types of blocks:
 * `action`: defines an action that can be reused by different rules
 * `rule`: defines a rule to match with events and run actions
 
+## Action
+
 For the `action` block, the settings are:
 * `action`: (*mandatory*) name of action to trigger
 * `actionner`: name of the actionner to use
 * `continue`: if `true`, no more action are applied after this one (each actionner has its own default value).
 * `ignore_errors`: if `true`, ignore the errors and avoid to stop at this action.
 * `parameters`: key:value map of parameters for the action. value can be a string, an array (slice) or a map.
+
+## Rule
 
 For the `rule` block, the settings are:
 * `rule`: (*mandatory*) Name of your rule
@@ -95,7 +99,13 @@ For the `rule` block, the settings are:
 * `dry_run`: if `true`: the actions are not ran (default: `false`).
 * `notifiers`: list of notifiers to enabled for the action, in addition with the defaults.
 
-Examples:
+## Example
+
+In the below YAML manifest, we can see two different Talon actions - ```Terminate Pod``` and ```Disable outbound connections```.
+1. The ```Terminate Pod``` action has a matching actionner to gracefully terminate a running workload with ```kubernetes:terminate```.
+2. The ```Disable outbound connections``` action enforces a Kubernetes NetworkPolicy through ```kubernetes:networkpolicy```.
+
+Finally, the two actions are initiated as instant response actions when the matching Falco rule [Unexpected outbound connection destination](https://thomas.labarussias.fr/falco-rules-explorer/?hash=8737710b2ecff31abe493a9496a76939) is triggered.
 
 ```yaml
 - action: Terminate Pod
