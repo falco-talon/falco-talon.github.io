@@ -11,6 +11,13 @@ The rules are evaluated from top to bottom.
 Multiple rules files can be used (repeat the `-r` flag), the first file is overriden by the following ones (strings are replaced, lists are appended, ...).
 {{% /alert %}}
 
+{{% alert title="Info" color="info" %}}
+If the setting `watch_rules` is set to `true`, `Falco Talon` watches the rules updates and automatically hot reloads them.
+{{% /alert %}}
+
+
+## Syntax
+
 The syntax for the rules files is:
 
 ```yaml
@@ -85,7 +92,7 @@ For the `rule` block, the settings are:
   * `ignore_errors`: if `true`, ignore the errors and avoid to stop at this action.
   * `parameters`: key:value map of parameters for the action. value can be a string, an array (slice) or a map.
 * `continue`: if `true`, no more rule are compared after the rule has been triggered (default is `true`).
-* `dry_run`: if `true`; the action is not applied (default: `false`).
+* `dry_run`: if `true`: the actions are not ran (default: `false`).
 * `notifiers`: list of notifiers to enabled for the action, in addition with the defaults.
 
 Examples:
