@@ -12,7 +12,7 @@ The configuration file contains the list of `notifiers` to enable by default and
 
 Example:
 ```yaml
-default_notifiers: # this notifiers will be enabled for all rules
+default_notifiers: # these notifiers will be enabled for all rules
   - k8sevents
   - loki
   - smtp
