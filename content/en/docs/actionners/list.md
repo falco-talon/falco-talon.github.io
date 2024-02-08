@@ -19,6 +19,7 @@ The `required fields` are the field elements that must be present in your Falco 
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Source: `syscalls`
 
 ## `kubernetes:labelize`
 
@@ -29,6 +30,7 @@ The `required fields` are the field elements that must be present in your Falco 
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Source: `syscalls`
 
 ## `kubernetes:networkpolicy`
 
@@ -39,6 +41,7 @@ The `required fields` are the field elements that must be present in your Falco 
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Source: `syscalls`
 
 ## `kubernetes:exec`
 
@@ -62,6 +65,7 @@ The `required fields` are the field elements that must be present in your Falco 
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Source: `syscalls`
 
 ## `kubernetes:log`
 
@@ -72,3 +76,4 @@ The `required fields` are the field elements that must be present in your Falco 
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Source: `syscalls`
