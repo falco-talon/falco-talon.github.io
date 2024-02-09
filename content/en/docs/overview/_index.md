@@ -1,17 +1,17 @@
 ---
 title: Overview
-description: What's Falco Talon?
+description: What is Falco Talon?
 weight: 1
 ---
 
 {{% alert title="Warning" color="warning" %}}
-Falco Talon is under active development and still in the alpha stage, some breaking changes may happen at any time and the docs might not be up to date.
+Falco Talon is currently under active development and remains in the alpha stage; therefore, breaking changes may occur at any time, and the documentation may not always be up to date.
 {{% /alert %}}
 
 
 ## What is the Falco Talon project?
 
-`Falco Talon` is a Response Engine for managing threats in your Kubernetes. It enhances the solutions proposed by the Falco community with a no-code tailor made solution. With easy rules, you can react to `events` from [`Falco`](https://falco.org) in milliseconds.
+`Falco Talon` is a Response Engine for managing threats in Kubernetes clusters. It enhances the solutions proposed by the Falco community with a no-code tailor-made solution. With easy rules, you can react to `events` from [`Falco`](https://falco.org) in milliseconds.
 
 ## Why having created Falco Talon?
 
@@ -28,10 +28,10 @@ Over the years, the Falco community proposed different methods to react to the F
 * complexity to manage sequential actions
 * intrication between the function and its configuration
 
-This is why we started to develop a custom solution especially built for [`Falco`](https://falco.org): `Falco Talon`.
+This is why we started to develop a custom solution specifically built for [`Falco`](https://falco.org): `Falco Talon`.
 
 * Tailor made for the Falco events
-* **No-code for the users**
+* **No-code implementation for end-users**
 * UX close to Falco with the rules (yaml files with append, override mechanisms)
 * Allow to set up sequential actions to run
 * Structured logs (with a trace id)
@@ -47,7 +47,7 @@ The match for the rule can be based on the:
 
 * React in real-time to the Falco Events
 * Allow fine granularity to match the events to react to
-* Having default rules and specific overrides 
+* Responding to default rules with specific overrides 
 
 #### What is it not good for?: 
 
@@ -55,7 +55,7 @@ The match for the rule can be based on the:
 
 #### What is it *not yet* good for?
 
-See this [issue on Github](https://github.com/Issif/falco-talon/issues/136) to know more about the upcoming. features.
+See this [issue on Github](https://github.com/Issif/falco-talon/issues/136) to know more about the upcoming features.
 
 ## Where should I go next?
 
