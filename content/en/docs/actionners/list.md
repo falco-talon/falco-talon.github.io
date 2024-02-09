@@ -78,3 +78,14 @@ The `required fields` are the field elements that must be present in your Falco 
   * `k8s.pod.name`
   * `k8s.ns.name`
 * Source: `syscalls`
+
+## `kubernetes:delete`
+
+* Description: **Delete a resource**
+* Continue: `false`
+* Parameters: `N/A`
+* Required fields:
+  * `ka.target.resource`
+  * `ka.target.name`
+  * `ka.target.namespace`
+* Source: `k8saudit`
