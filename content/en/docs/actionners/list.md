@@ -9,7 +9,7 @@ The `required fields` are the field elements that must be present in your Falco 
 
 ## `kubernetes:terminate`
 
-* Description: **Terminate pod**
+* Description: **Terminate the pod**
 * Continue: `false`
 * Parameters:
   * `grace_period_seconds`: The duration in seconds before the pod should be deleted. The value zero indicates delete immediately.
@@ -21,9 +21,20 @@ The `required fields` are the field elements that must be present in your Falco 
   * `k8s.ns.name`
 * Source: `syscalls`
 
+Example:
+```yaml
+- action: Terminate the pod
+  actionner: kubernetes:terminate
+  parameters:
+    grace_period_seconds: 5
+    ignore_daemonsets: true
+    ignore_statefulsets: true
+    min_healthy_replicas: 33%
+```
+
 ## `kubernetes:labelize`
 
-* Description: **Add, modify or delete labels of pod**
+* Description: **Add, modify or delete the labels of the pod**
 * Continue: `true`
 * Parameters: 
   * `labels`: key:value map of labels to add/modify/delete (empty value means label deletion)
@@ -31,6 +42,15 @@ The `required fields` are the field elements that must be present in your Falco 
   * `k8s.pod.name`
   * `k8s.ns.name`
 * Source: `syscalls`
+
+Example:
+```yaml
+- action: Labelize the pod
+  actionner: kubernetes:labelize
+  parameters:
+    labels:
+      suspicious: true
+```
 
 ## `kubernetes:networkpolicy`
 
@@ -43,6 +63,16 @@ The `required fields` are the field elements that must be present in your Falco 
   * `k8s.ns.name`
 * Source: `syscalls`
 
+Example:
+```yaml
+- action: Create a network policy
+  actionner: kubernetes:networkpolicy
+  parameters:
+    allow:
+      - 192.168.1.0/24
+      - 172.17.0.0/16
+```
+
 ## `kubernetes:exec`
 
 * Description: **Exec a command in a pod**
@@ -54,6 +84,15 @@ The `required fields` are the field elements that must be present in your Falco 
   * `k8s.pod.name`
   * `k8s.ns.name`
 * Source: `syscalls`
+
+Example:
+```yaml
+- action: Exec a command into the pod
+  actionner: kubernetes:exec
+  parameters:
+    shell: /bin/bash
+    command: "ps awxuf"
+```
 
 ## `kubernetes:script`
 
@@ -68,6 +107,18 @@ The `required fields` are the field elements that must be present in your Falco 
   * `k8s.ns.name`
 * Source: `syscalls`
 
+Example:
+```yaml
+- action: Run a script into the pod
+  actionner: kubernetes:script
+  parameters:
+    shell: /bin/bash
+    script: |
+      ps awxuf
+      netstat -lpauten
+      top -n 1
+```
+
 ## `kubernetes:log`
 
 * Description: **Get logs from a pod**
@@ -79,9 +130,17 @@ The `required fields` are the field elements that must be present in your Falco 
   * `k8s.ns.name`
 * Source: `syscalls`
 
+Example:
+```yaml
+- action: Get logs of the pod
+  actionner: kubernetes:log
+  parameters:
+    tail_lines: 200
+```
+
 ## `kubernetes:delete`
 
-* Description: **Delete a resource**
+* Description: **Delete the resource**
 * Continue: `false`
 * Parameters: `N/A`
 * Required fields:
@@ -89,3 +148,25 @@ The `required fields` are the field elements that must be present in your Falco 
   * `ka.target.name`
   * `ka.target.namespace`
 * Source: `k8saudit`
+
+Example:
+```yaml
+- action: Delete the suspicious resource
+  actionner: kubernetes:delete
+  parameters:
+    tail_lines: 200
+```
+
+{{% alert title="Info" color="info" %}}
+The managed resources are:
+- configmap
+- secret
+- deployment
+- daeomonset
+- service
+- serviceaccount  
+- replicaset
+- statefulset
+- role
+- clusterole
+{{% /alert %}}
