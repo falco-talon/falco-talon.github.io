@@ -159,6 +159,7 @@ Example:
 
 {{% alert title="Info" color="info" %}}
 The managed resources are:
+- namespace
 - configmap
 - secret
 - deployment
@@ -170,3 +171,22 @@ The managed resources are:
 - role
 - clusterole
 {{% /alert %}}
+
+## `calico:networkpolicy`
+
+* Description: **Create a Calico Network Policy to block the egress traffic to a specific IP**
+* Continue: `true`
+* Parameters:
+  * `allow`: list of CIDR to allow anyway (eg: private subnets) (default: 0.0.0.0/0)
+  * `order`: order of the network policy
+* Required fields:
+  * `fd.sip` or `fd.rip`
+* Source: `syscalls`
+
+Example:
+```yaml
+- action: Create Calico netpol
+  actionner: calico:networkpolicy
+  parameters:
+    order: 20
+```
