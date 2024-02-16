@@ -6,9 +6,10 @@ description: >
 ---
 
 The `Actionners` define the actions to apply when an event matches a rule, they are named with pattern `category:action`.
+
 The `category` allows to group `actions` and avoid multiple initializations (eg, multi Kubernetes API client, multi AWS clients, ...).
 
-Each `actionner` is configured with `parameters` setting, a map of values passed to the action. The values can be a string, a list (array) or a map (map[string]string). 
+Each `actionner` is configured with `parameters`, a map of values passed to the action. The values can be a string, a list (array) or a map (map[string]string). 
 
 Example: 
 ```yaml

@@ -7,7 +7,11 @@ description: >
 
 The `required fields` are the field elements that must be present in your Falco events to allow the actionner to do its work.
 
-## `kubernetes:terminate`
+## `kubernetes`
+
+The category `kubernetes` can be initialized with a `kubeconfig` file when Falco Talon runs outside Kubernetes.
+
+### `kubernetes:terminate`
 
 * Description: **Terminate the pod**
 * Continue: `false`
@@ -32,7 +36,7 @@ Example:
     min_healthy_replicas: 33%
 ```
 
-## `kubernetes:labelize`
+### `kubernetes:labelize`
 
 * Description: **Add, modify or delete the labels of the pod**
 * Continue: `true`
@@ -52,7 +56,7 @@ Example:
       suspicious: true
 ```
 
-## `kubernetes:networkpolicy`
+### `kubernetes:networkpolicy`
 
 * Description: **Create, update a network policy to block all egress traffic for pod**
 * Continue: `true`
@@ -73,7 +77,7 @@ Example:
       - 172.17.0.0/16
 ```
 
-## `kubernetes:exec`
+### `kubernetes:exec`
 
 * Description: **Exec a command in a pod**
 * Continue: `true`
@@ -94,7 +98,7 @@ Example:
     command: "ps awxuf"
 ```
 
-## `kubernetes:script`
+### `kubernetes:script`
 
 * Description: **Run a script in a pod**
 * Continue: `true`
@@ -119,7 +123,7 @@ Example:
       top -n 1
 ```
 
-## `kubernetes:log`
+### `kubernetes:log`
 
 * Description: **Get logs from a pod**
 * Continue: `true`
@@ -138,7 +142,7 @@ Example:
     tail_lines: 200
 ```
 
-## `kubernetes:delete`
+### `kubernetes:delete`
 
 * Description: **Delete the resource**
 * Continue: `false`
@@ -172,7 +176,11 @@ The managed resources are:
 - clusterole
 {{% /alert %}}
 
-## `calico:networkpolicy`
+## `calico`
+
+The category `calico` can be initialized with a `kubeconfig` file when Falco Talon runs outside Kubernetes.
+
+### `calico:networkpolicy`
 
 * Description: **Create a Calico Network Policy to block the egress traffic to a specific IP**
 * Continue: `true`
