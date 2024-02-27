@@ -5,7 +5,7 @@ weight: 1
 ---
 
 {{% alert title="Warning" color="warning" %}}
-Falco Talon is currently under active development and remains in the alpha stage; therefore, breaking changes may occur at any time, and the documentation may not always be up to date.
+Falco Talon is currently under active development and remains in the alpha stage, therefore, breaking changes may occur at any time, and the documentation may not always be up to date.
 {{% /alert %}}
 
 

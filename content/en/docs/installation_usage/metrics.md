@@ -5,7 +5,7 @@ categories: [Examples]
 tags: [test, sample, docs]
 ---
 
-Falco Talon exposes a `/metrics` endpoint to expose some metrics in the Prometheus format.
+Falco Talon exposes a `/metrics` endpoint to with some metrics in the Prometheus format.
 
 ```
 # HELP action_total number of actions
