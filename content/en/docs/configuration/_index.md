@@ -21,7 +21,11 @@ The static configuration of `Falco Talon` is set with a `.yaml` file (default: `
 | `deduplication_time_window_seconds` | `DEDUPLICATION_TIME_WINDOW_SECONDS` |    `5`    | Duration in seconds for the deduplication time window                           |
 | `default_notifiers`                 | `DEFAULT_NOTIFIERS`                 |    n/a    | List of `notifiers` which are enabled for all rules                             |
 | `notifiers_x`                       | `NOTIFIERS_X`                       |    n/a    | List of `notifiers` with their settings                                         |
-
+| `aws.role_arn`                 | `AWS_ROLE_ARN`                 |    n/a    | AWS Role ARN to use with AWS actions                             |
+| `aws.external_id`                 | `AWS_ROLE_EXTERNAL_ID`                 |    n/a    | AWS External ID used to assume roles with AWS actions. This field is ignored if **aws.role_arn** is not set.                             |
+| `aws.region`                 | `AWS_REGION`                 |    n/a    | AWS Region to use, it should be specified along **aws.access_key** and **aws.secret_key**                             |
+| `aws.access_key`                 | `AWS_ACCESS_KEY`                 |    n/a    | AWS Access Key to use, it should be specified along **aws.region** and **aws.secret_key**                             |
+| `aws.secret_key`                 | `AWS_SECRET_KEY`                 |    n/a    | AWS Access Key to use, it should be specified along **aws.region** and **aws.access_key**                             |
 #### Example
 
 ```yaml
@@ -32,6 +36,13 @@ kubeconfig: "./kubeconfig.yaml"
 
 default_notifiers:
   - slack
+
+aws:
+ role_arn: arn:aws:iam::<account_number>:role/<role_name>
+ external_id: <external_id>
+ region: <region> # if not specified, default region from provider credential chain will be used
+ access_key: <access_key> # if not specified, default access_key from provider credential chain will be used
+ secret_key: <secret_key> # if not specified, default secret_key from provider credential chain will be used
 
 notifiers:
   slack:
