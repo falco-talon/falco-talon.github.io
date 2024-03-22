@@ -207,8 +207,9 @@ Example:
   * `aws_lambda_name`: Lambda name to call. Lambda must reside in the same region as your default credential provider or static region provided in configuration.
   * `aws_lambda_alias_or_version`: Lambda alias or version to call. (default: $LATEST)
   * `aws_lambda_invocation_type`: Invocation type for Lambda. Accepted values: RequestResponse, Event, DryRun. (default: RequestResponse)
-* Required fields:
-  * No required fields
+* Required AWS access:
+  * `sts:getCallerIdentity`
+  * `lambda:InvokeFunction`
 * Source: `cloudtrail`
 
 Example:
