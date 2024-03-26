@@ -201,7 +201,7 @@ Example:
 
 ### `aws:lambda`
 
-* Description: **Invoke an AWS lambda forwarding the output_fields**
+* Description: **Invoke an AWS lambda forwarding the Falco event payload**
 * Continue: `true`
 * Parameters:
   * `aws_lambda_name`: Lambda name to call. Lambda must reside in the same region as your default credential provider or static region provided in configuration.
