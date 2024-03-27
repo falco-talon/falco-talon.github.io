@@ -198,3 +198,27 @@ Example:
   parameters:
     order: 20
 ```
+
+### `aws:lambda`
+
+* Description: **Invoke an AWS lambda forwarding the Falco event payload**
+* Continue: `true`
+* Parameters:
+  * `aws_lambda_name`: Lambda name to call. Lambda must reside in the same region as your default credential provider or static region provided in configuration.
+  * `aws_lambda_alias_or_version`: Lambda alias or version to call. (default: $LATEST)
+  * `aws_lambda_invocation_type`: Invocation type for Lambda. Accepted values: RequestResponse, Event, DryRun. (default: RequestResponse)
+* Required AWS access:
+  * `sts:getCallerIdentity`
+  * `lambda:InvokeFunction`
+  * `lambda:GetFunction`
+* Source: `any`
+
+Example:
+```yaml
+- action: Invoke Lambda function
+  actionner: aws:lambda
+  parameters:
+    aws_lambda_name: sample-function
+    aws_lambda_alias_or_version: $LATEST
+    aws_lambda_invocation_type: RequestResponse
+```
