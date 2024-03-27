@@ -211,7 +211,6 @@ Example:
   * `sts:getCallerIdentity`
   * `lambda:InvokeFunction`
   * `lambda:GetFunction`
-
 * Source: `any`
 
 Example:
