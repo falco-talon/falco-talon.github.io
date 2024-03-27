@@ -210,7 +210,9 @@ Example:
 * Required AWS access:
   * `sts:getCallerIdentity`
   * `lambda:InvokeFunction`
-* Source: `cloudtrail`
+  * `lambda:GetFunction`
+
+* Source: `any`
 
 Example:
 ```yaml
