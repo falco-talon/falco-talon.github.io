@@ -98,6 +98,28 @@ Example:
     command: "ps awxuf"
 ```
 
+{{% alert title="Info" color="info" %}}
+The fields of the events and the context of the Falco Talon rule are exported as environment variables and can be used in the command.
+
+The non exhaustive list contains:
+- `PRIORITY`: the priority of the Falco events
+- `HOSTNAME`: the hostname where the Falco event occured
+- `SOURCE`: the source for the Falco event
+- `RULE`: the name of the rule that created the Falco event
+- `TAGS`: a comma separated list of the tags associated with the Falco event
+- `FALCO-TALON_RULE`: the name of the Falco Talon rule that matches
+- `FALCO-TALON_RULE_CONTINUE`: if the Falco Talon rule allows to continue or not
+- `FALCO-TALON_RULE_DRYRUN`: if the Falco Talon rule dry runs or not
+- `FALCO-TALON_RULE_ACTION`: the name of the action triggered by the Falco Rule
+- `FALCO-TALON_RULE_ACTION_CONTINUE`: if the action triggered by the Falco Rule allows to continue or not
+- `FALCO-TALON_RULE_ACTION_IGNORE_ERRORS`: if the action triggered by the Falco Rule ignores the errors or not
+- `FALCO-TALON_RULE_ACTION_PARAMETERS`: a json payload with parameters of the action triggered by the Falco Rule
+- `FALCO-TALON_RULE_ACTIONNER`: the actionner used by the action triggered by the Falco Rule
+- All the `OutputFields` of the Falco event are exported, in uppercase, with the dots replaced by `_` and the brackets `[ ]` removed, examples:
+  - `fd.name`: `FD_NAME`
+  - `proc.args[0]`: `PROC_ARGS_0`
+{{% /alert %}}
+
 ### `kubernetes:script`
 
 * Description: **Run a script in a pod**
@@ -122,6 +144,28 @@ Example:
       netstat -lpauten
       top -n 1
 ```
+
+{{% alert title="Info" color="info" %}}
+The fields of the events and the context of the Falco Talon rule are exported as environment variables and can be used in the script.
+
+The non exhaustive list contains:
+- `PRIORITY`: the priority of the Falco events
+- `HOSTNAME`: the hostname where the Falco event occured
+- `SOURCE`: the source for the Falco event
+- `RULE`: the name of the rule that created the Falco event
+- `TAGS`: a comma separated list of the tags associated with the Falco event
+- `FALCO-TALON_RULE`: the name of the Falco Talon rule that matches
+- `FALCO-TALON_RULE_CONTINUE`: if the Falco Talon rule allows to continue or not
+- `FALCO-TALON_RULE_DRYRUN`: if the Falco Talon rule dry runs or not
+- `FALCO-TALON_RULE_ACTION`: the name of the action triggered by the Falco Rule
+- `FALCO-TALON_RULE_ACTION_CONTINUE`: if the action triggered by the Falco Rule allows to continue or not
+- `FALCO-TALON_RULE_ACTION_IGNORE_ERRORS`: if the action triggered by the Falco Rule ignores the errors or not
+- `FALCO-TALON_RULE_ACTION_PARAMETERS`: a json payload with parameters of the action triggered by the Falco Rule
+- `FALCO-TALON_RULE_ACTIONNER`: the actionner used by the action triggered by the Falco Rule
+- All the `OutputFields` of the Falco event are exported, in uppercase, with the dots replaced by `_` and the brackets `[ ]` removed, examples:
+  - `fd.name`: `FD_NAME`
+  - `proc.args[0]`: `PROC_ARGS_0`
+{{% /alert %}}
 
 ### `kubernetes:log`
 
