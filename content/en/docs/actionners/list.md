@@ -41,6 +41,7 @@ Example:
 * Description: **Add, modify or delete the labels of the pod**
 * Continue: `true`
 * Parameters: 
+  * `level`: level to apply the apply the labels, can be `node` or `pod` (default) 
   * `labels`: key:value map of labels to add/modify/delete (empty value means label deletion)
 * Required fields:
   * `k8s.pod.name`
@@ -52,6 +53,7 @@ Example:
 - action: Label the pod
   actionner: kubernetes:label
   parameters:
+    level: pod
     labels:
       suspicious: true
 ```
