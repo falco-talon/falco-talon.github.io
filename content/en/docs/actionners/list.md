@@ -222,6 +222,23 @@ The managed resources are:
 - clusterole
 {{% /alert %}}
 
+
+### `kubernetes:cordon`
+
+* Description: **Cordon a node**
+* Continue: `true`
+* Parameters: N/A
+* Required fields:
+  * `k8s.pod.name`
+  * `k8s.ns.name`
+* Source: `syscalls`
+
+Example:
+```yaml
+- action: Cordon the node
+  actionner: kubernetes:cordon
+```
+
 ## `calico`
 
 The category `calico` can be initialized with a `kubeconfig` file when Falco Talon runs outside Kubernetes.
