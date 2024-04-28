@@ -18,7 +18,6 @@ No configuration is requested.
 ```
 LAST SEEN   TYPE     REASON                                    OBJECT                      MESSAGE
 18s         Normal   falco-talon:kubernetes:labelize:success   pod/cncf-55696bc998-ql5qd   Status: success...
-18s         Normal   falco-talon:kubernetes:labelize:success   pod/cncf-55696bc998-ql5qd   Status: success...
 ```
 
 ```yaml
@@ -124,8 +123,8 @@ notifiers:
 |         Setting         |    Default    |                                    Description                                    |
 | ----------------------- | ------------- | --------------------------------------------------------------------------------- |
 | `host_port`             | n/a           | http://{domain or ip}:{port}                                                      |
-| `user`                  | n/a           | User for Grafana Logs                                                             |
-| `password`              | n/a           | Password for Grafana Logs                                                         |
+| `user`                  | n/a           | User                                                                              |
+| `password`              | n/a           | Password                                                                          |
 | `index`                 | `falco-talon` | Elasticsearch index                                                               |
 | `suffix`                | `daily`       | Date suffix for index rotation : `daily` (default), `monthly`, `annually`, `none` |
 | `create_index_template` | `true`        | Create the index template at the init if it doesn't exist                         |
