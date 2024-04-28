@@ -23,6 +23,7 @@ The category `kubernetes` can be initialized with a `kubeconfig` file when Falco
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Accept Contexts: `false`
 * Source: `syscalls`
 
 Example:
@@ -46,6 +47,7 @@ Example:
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Accept Contexts: `false`
 * Source: `syscalls`
 
 Example:
@@ -63,10 +65,12 @@ Example:
 * Description: **Create, update a network policy to block all egress traffic for pod**
 * Continue: `true`
 * Parameters:
-  * `allow`: list of CIDR to allow anyway (eg: private subnets)
+  * `allow_cidr`: list of CIDR to allow anyway (eg: private subnets)
+  * `allow_namespaces`: list of namespaces to allow anyway
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Accept Contexts: `false`
 * Source: `syscalls`
 
 Example:
@@ -74,9 +78,12 @@ Example:
 - action: Create a network policy
   actionner: kubernetes:networkpolicy
   parameters:
-    allow:
-      - 192.168.1.0/24
-      - 172.17.0.0/16
+    allow_cidr:
+      - "192.168.1.0/24"
+      - "172.17.0.0/16"
+    allow_namespaces:
+      - "green-ns"
+      - "blue-ns"
 ```
 
 ### `kubernetes:exec`
@@ -89,6 +96,7 @@ Example:
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Accept Contexts: `true`
 * Source: `syscalls`
 
 Example:
@@ -120,6 +128,19 @@ The non exhaustive list contains:
 - All the `OutputFields` of the Falco event are exported, in uppercase, with the dots replaced by `_` and the brackets `[ ]` removed, examples:
   - `fd.name`: `FD_NAME`
   - `proc.args[0]`: `PROC_ARGS_0`
+- For the context fields, for example:
+  - For `aws`:
+    - `AWS_INSTANCE_PROFILE_ARN`
+    - `AWS_INSTANCE_PROFILE_ID`
+    - `AWS_REGION`
+  - For `k8snode`:
+    - `NODE_HOSTNAME`
+    - `NODE_INSTANCETYPE`
+    - `NODE_ROLE`
+    - `NODE_NODE`
+    - `NODE_TOPOLOGY_ZONE`
+    - `NODE_TOPOLOGY_REGION`
+    - `NODE_SPEC_PROVIDEDID`
 {{% /alert %}}
 
 ### `kubernetes:script`
@@ -133,6 +154,7 @@ The non exhaustive list contains:
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Accept Contexts: `true`
 * Source: `syscalls`
 
 Example:
@@ -167,6 +189,19 @@ The non exhaustive list contains:
 - All the `OutputFields` of the Falco event are exported, in uppercase, with the dots replaced by `_` and the brackets `[ ]` removed, examples:
   - `fd.name`: `FD_NAME`
   - `proc.args[0]`: `PROC_ARGS_0`
+- For the context fields, for example:
+  - For `aws`:
+    - `AWS_INSTANCE_PROFILE_ARN`
+    - `AWS_INSTANCE_PROFILE_ID`
+    - `AWS_REGION`
+  - For `k8snode`:
+    - `NODE_HOSTNAME`
+    - `NODE_INSTANCETYPE`
+    - `NODE_ROLE`
+    - `NODE_NODE`
+    - `NODE_TOPOLOGY_ZONE`
+    - `NODE_TOPOLOGY_REGION`
+    - `NODE_SPEC_PROVIDEDID`
 {{% /alert %}}
 
 ### `kubernetes:log`
@@ -197,6 +232,7 @@ Example:
   * `ka.target.resource`
   * `ka.target.name`
   * `ka.target.namespace`
+* Accept Contexts: `false`
 * Source: `k8saudit`
 
 Example:
@@ -222,6 +258,24 @@ The managed resources are:
 - clusterole
 {{% /alert %}}
 
+
+### `kubernetes:cordon`
+
+* Description: **Cordon a node**
+* Continue: `true`
+* Parameters: N/A
+* Required fields:
+  * `k8s.pod.name`
+  * `k8s.ns.name`
+* Accept Contexts: `false`
+* Source: `syscalls`
+
+Example:
+```yaml
+- action: Cordon the node
+  actionner: kubernetes:cordon
+```
+
 ## `calico`
 
 The category `calico` can be initialized with a `kubeconfig` file when Falco Talon runs outside Kubernetes.
@@ -231,10 +285,12 @@ The category `calico` can be initialized with a `kubeconfig` file when Falco Tal
 * Description: **Create a Calico Network Policy to block the egress traffic to a specific IP**
 * Continue: `true`
 * Parameters:
-  * `allow`: list of CIDR to allow anyway (eg: private subnets) (default: 0.0.0.0/0)
+  * `allow_cidr`: list of CIDR to allow anyway (eg: private subnets) (default: 0.0.0.0/0)
+  * `allow_namespaces`: list of namespaces to allow anyway
   * `order`: order of the network policy
 * Required fields:
   * `fd.sip` or `fd.rip`
+* Accept Contexts: `false`
 * Source: `syscalls`
 
 Example:
@@ -243,6 +299,12 @@ Example:
   actionner: calico:networkpolicy
   parameters:
     order: 20
+    allow_cidr:
+      - "192.168.1.0/24"
+      - "172.17.0.0/16"
+    allow_namespaces:
+      - "green-ns"
+      - "blue-ns"
 ```
 
 ### `aws:lambda`
@@ -257,6 +319,7 @@ Example:
   * `sts:getCallerIdentity`
   * `lambda:InvokeFunction`
   * `lambda:GetFunction`
+* Accept Contexts: `true`
 * Source: `any`
 
 Example:

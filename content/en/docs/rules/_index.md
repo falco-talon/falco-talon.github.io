@@ -22,6 +22,7 @@ The syntax for the rules files is:
 
 ```yaml
 - action: <string,mandatory>
+  description: <string>
   actionner: <string,mandatory>
   continue: <bool>
   ignore_errors: <bool>
@@ -35,6 +36,7 @@ The syntax for the rules files is:
       <string>: <string>
 
 - rule: <string,mandatory>
+  description: <string>
   match:
     rules:
       - <string>
@@ -51,6 +53,7 @@ The syntax for the rules files is:
   actions:
     - action: <string,mandatory>
     - action: <string,mandatory>
+      description: <string>
       actionner: <string,mandatory>
       continue: <bool>
       ignore_errors: <bool>
@@ -75,6 +78,7 @@ The rules files contain 2 types of blocks:
 
 For the `action` block, the settings are:
 * `action`: (*mandatory*) name of action to trigger
+* `description`: description of the action (for user only)
 * `actionner`: name of the actionner to use
 * `continue`: if `true`, no more action are applied after this one (each actionner has its own default value).
 * `ignore_errors`: if `true`, ignore the errors and avoid to stop at this action.
@@ -84,6 +88,7 @@ For the `action` block, the settings are:
 
 For the `rule` block, the settings are:
 * `rule`: (*mandatory*) Name of your rule
+* `description`: description of the action (for user only)
 * `match`: the section to define the criterias to match
   * `rules`: (*list*) (`OR` logic) Falco rules to match. If empty, all rules match.
   * `priority`: Priority to match. If empty, all priorities match. Syntax is like: `>=Critical`, `<Warning`, `Debug`.
@@ -91,6 +96,7 @@ For the `rule` block, the settings are:
   * `output_fields`: (*list*) (`OR` logic) Comma separated lists of key:comparison:value for Output fields to match (`AND` logic). If emtpy, all output fields match.
 * `actions`: the list of actions to sequentially run, they can refer to an `action` block or defined locally 
   * `action`: (*mandatory*) name of action to trigger, can refer to an `action` block
+  * `description`: description of the action (for user only)
   * `actionner`: name of the actionner to use
   * `continue`: if `true`, no more action are applied after this one (each actionner has its own default value).
   * `ignore_errors`: if `true`, ignore the errors and avoid to stop at this action.
@@ -109,6 +115,7 @@ Finally, the two actions are initiated as instant response actions when the matc
 
 ```yaml
 - action: Terminate Pod
+  description: terminate the pod if it doesn't belong to a statefulset
   actionner: kubernetes:terminate
   parameters:
     ignoreDaemonsets: false
@@ -123,6 +130,7 @@ Finally, the two actions are initiated as instant response actions when the matc
       - "10.0.0.0/32"
 
 - rule: Suspicious outbound connection
+  description: Block suspicious outbound connections and terminate the pod
   match:
     rules:
       - Unexpected outbound connection destination
