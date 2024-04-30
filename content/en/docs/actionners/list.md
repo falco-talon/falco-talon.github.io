@@ -36,7 +36,7 @@ Example:
     min_healthy_replicas: 33%
 ```
 
-### `kubernetes:labelize`
+### `kubernetes:label`
 
 * Description: **Add, modify or delete the labels of the pod**
 * Continue: `true`
@@ -49,8 +49,8 @@ Example:
 
 Example:
 ```yaml
-- action: Labelize the pod
-  actionner: kubernetes:labelize
+- action: Label the pod
+  actionner: kubernetes:label
   parameters:
     labels:
       suspicious: true

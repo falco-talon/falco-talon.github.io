@@ -17,11 +17,11 @@ No configuration is requested.
 
 ```
 LAST SEEN   TYPE     REASON                                    OBJECT                      MESSAGE
-18s         Normal   falco-talon:kubernetes:labelize:success   pod/cncf-55696bc998-ql5qd   Status: success...
+18s         Normal   falco-talon:kubernetes:label:success      pod/cncf-55696bc998-ql5qd   Status: success...
 ```
 
 ```yaml
-action: kubernetes:labelize
+action: kubernetes:label
 apiVersion: v1
 eventTime: "2024-02-27T13:54:30.008721Z"
 firstTimestamp: null
@@ -32,13 +32,13 @@ involvedObject:
 kind: Event
 lastTimestamp: null
 message: "Status: success\nMessage: action\nRule: Terminal shell in container\nAction:
-  Labelize Pod as Suspicious\nActionner: kubernetes:labelize\nEvent: A shell was spawned
+  Label Pod as Suspicious\nActionner: kubernetes:label\nEvent: A shell was spawned
   in a container with an attached terminal (evt_type=execve user=root user_uid=0 user_loginuid=-1
   process=sh proc_exepath=/usr/bin/dash parent=runc command=sh -c command -v bash
   >/dev/null && exec bash || exec sh terminal=34817 exe_flags=EXE_WRITABLE container_id=f13c72275fd4
   container_image=docker.io/library/debian container_image_tag=latest container_name=cncf
   k8s_ns=default k8s_pod_name=cncf-55696bc998-ql5qd)\nnamespace: default\npod: cncf-55696bc998-ql5qd\nOutput:
-  \nthe pod \"cncf-55696bc998-ql5qd\" in the namespace \"default\" has been labelized\nTraceID:
+  \nthe pod \"cncf-55696bc998-ql5qd\" in the namespace \"default\" has been labelled\nTraceID:
   cc84de57-7617-4359-ad40-1a7a8d854743\n"
 metadata:
   creationTimestamp: "2024-02-27T13:54:30Z"
@@ -47,7 +47,7 @@ metadata:
   namespace: default
   resourceVersion: "32141229"
   uid: a407b246-f2b5-46ba-8146-ebe474302604
-reason: falco-talon:kubernetes:labelize:success
+reason: falco-talon:kubernetes:label:success
 reportingComponent: falcosecurity.org/falco-talon
 reportingInstance: falco-talon
 source:
