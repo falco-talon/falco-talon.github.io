@@ -21,8 +21,8 @@ Example:
     ignore_statefulsets: true
     min_healthy_replicas: 33%
 
-- action: Labelize the pod
-  actionner: kubernetes:labelize
+- action: Label the pod
+  actionner: kubernetes:label
   parameters:
     labels:
       suspicious: true
