@@ -8,33 +8,40 @@ description: Configuration file
 
 The static configuration of `Falco Talon` is set with a `.yaml` file (default: `./config.yaml`) or with environment variables.
 
-|               Setting               |               Env var               |  Default  |                                   Description                                   |
-| ----------------------------------- | ----------------------------------- | :-------: | ------------------------------------------------------------------------------- |
-| `listen_address`                    | `LISTEN_ADDRESS`                    | `0.0.0.0` | Listten Address                                                                 |
-| `listen_port`                       | `LISTEN_PORT`                       |  `2803`   | Listten Port                                                                    |
-| `rules_files`                       | `RULES_FILES`                       |    n/a    | File with rules                                                                 |
-| `watch_rules`                       | `WATCH_RULES`                       |  `true`   | Reload rules if they change                                                     |
-| `print_all_events`                  | `PRINT_ALL_EVENTS`                  |  `true`   | Print in logs all received events, not only those which matches                 |
-| `kubeconfig`                        | `KUBECONFIG`                        |    n/a    | Kube config file, only if `Falco Talon` runs outside Kubernetes                 |
-| `log_format`                        | `LOG_FORMAT`                        |  `color`  | Log Format: text, color, json                                                   |
-| `deduplication_leader_lease`        | `DEDUPLICATION_LEADER_LEASE`        |  `true`   | In k8s only, create a lease for the leader election, used for the deduplication |
-| `deduplication_time_window_seconds` | `DEDUPLICATION_TIME_WINDOW_SECONDS` |    `5`    | Duration in seconds for the deduplication time window                           |
-| `default_notifiers`                 | `DEFAULT_NOTIFIERS`                 |    n/a    | List of `notifiers` which are enabled for all rules                             |
-| `notifiers_x`                       | `NOTIFIERS_X`                       |    n/a    | List of `notifiers` with their settings                                         |
-| `aws.role_arn`                 | `AWS_ROLE_ARN`                 |    n/a    | AWS Role ARN to use with AWS actions                             |
-| `aws.external_id`                 | `AWS_ROLE_EXTERNAL_ID`                 |    n/a    | AWS External ID used to assume roles with AWS actions. This field is ignored if **aws.role_arn** is not set.                             |
-| `aws.region`                 | `AWS_REGION`                 |    n/a    | AWS Region to use, it should be specified along **aws.access_key** and **aws.secret_key**                             |
-| `aws.access_key`                 | `AWS_ACCESS_KEY`                 |    n/a    | AWS Access Key to use, it should be specified along **aws.region** and **aws.secret_key**                             |
-| `aws.secret_key`                 | `AWS_SECRET_KEY`                 |    n/a    | AWS Access Key to use, it should be specified along **aws.region** and **aws.access_key**                             |
+|               Setting               |               Env var               |  Default  |                                                 Description                                                  |
+| ----------------------------------- | ----------------------------------- | :-------: | ------------------------------------------------------------------------------------------------------------ |
+| `listen_address`                    | `LISTEN_ADDRESS`                    | `0.0.0.0` | Listten Address                                                                                              |
+| `listen_port`                       | `LISTEN_PORT`                       |  `2803`   | Listten Port                                                                                                 |
+| `rules_files`                       | `RULES_FILES`                       |    n/a    | File with rules                                                                                              |
+| `watch_rules`                       | `WATCH_RULES`                       |  `true`   | Reload rules if they change                                                                                  |
+| `print_all_events`                  | `PRINT_ALL_EVENTS`                  |  `true`   | Print in logs all received events, not only those which matches                                              |
+| `kubeconfig`                        | `KUBECONFIG`                        |    n/a    | Kube config file, only if `Falco Talon` runs outside Kubernetes                                              |
+| `log_format`                        | `LOG_FORMAT`                        |  `color`  | Log Format: text, color, json                                                                                |
+| `deduplication.leader_election`     | `DEDUPLICATION_LEADER_ELECTION`     |  `true`   | enable the leader election for cluster mode (in k8s only)                                                    |
+| `deduplication.time_window_seconds` | `DEDUPLICATION_TIME_WINDOW_SECONDS` |    `5`    | Duration in seconds for the deduplication time window                                                        |
+| `default_notifiers`                 | `DEFAULT_NOTIFIERS`                 |    n/a    | List of `notifiers` which are enabled for all rules                                                          |
+| `notifiers_x`                       | `NOTIFIERS_X`                       |    n/a    | List of `notifiers` with their settings                                                                      |
+| `aws.role_arn`                      | `AWS_ROLE_ARN`                      |    n/a    | AWS Role ARN to use with AWS actions                                                                         |
+| `aws.external_id`                   | `AWS_ROLE_EXTERNAL_ID`              |    n/a    | AWS External ID used to assume roles with AWS actions. This field is ignored if **aws.role_arn** is not set  |
+| `aws.region`                        | `AWS_REGION`                        |    n/a    | AWS Region to use, it should be specified along **aws.access_key** and **aws.secret_key**                    |
+| `aws.access_key`                    | `AWS_ACCESS_KEY`                    |    n/a    | AWS Access Key to use, it should be specified along **aws.region** and **aws.secret_key**                    |
+| `aws.secret_key`                    | `AWS_SECRET_KEY`                    |    n/a    | AWS Access Key to use, it should be specified along **aws.region** and **aws.access_key**                    |
 #### Example
 
 ```yaml
-listen_address: "0.0.0.0"
-listen_port: "2803"
-rules_files: "./rules.yaml"
-kubeconfig: "./kubeconfig.yaml"
+listen_address: "0.0.0.0" # default: "0.0.0.0"
+listen_port: "2803" # default: "2803"
+rules_file: "./rules.yaml" # default: "./rules.yaml"
+kubeConfig: "~/.kube/config" # only if Falco Talon is running outside Kubernetes
+log_format: "color" # log Format: text, color, json (default: color)
+watch_rules: true # reload if the rules file changes (default: true)
+print_all_events: true # print in logs all received events, not only those which match
 
-default_notifiers:
+deduplication:
+  leader_election: true # enable the leader election for cluster mode (in k8s only)
+  time_window_seconds: 5 # duration in seconds for the deduplication time window (default: 5)
+
+default_notifiers: # these notifiers will be enabled for all rules
   - slack
 
 aws:
