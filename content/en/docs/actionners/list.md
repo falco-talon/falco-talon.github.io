@@ -276,6 +276,28 @@ Example:
   actionner: kubernetes:cordon
 ```
 
+### `kubernetes:drain`
+
+* Description: **Drain a node**
+* Continue: `true`
+* Parameters:
+  * `grace_period_seconds`: The duration in seconds before the pod should be deleted. The value zero indicates delete immediately.
+  * `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated.
+  * `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated.
+  * `min_healthy_replicas`: Minimum number of healthy pods to allow the termination, can be an absolute or % value (the value must be a quoted string).
+  * `ignore_error`: If true, errors during the drain will be ignored, resulting in a successful action call. Used to control subsequent actions flow.
+* Required fields:
+  * `k8s.pod.name`
+  * `k8s.ns.name`
+* Accept Contexts: `false`
+* Source: `syscalls`
+
+Example:
+```yaml
+- action: Drain the node
+  actionner: kubernetes:drain
+```
+
 ## `calico`
 
 The category `calico` can be initialized with a `kubeconfig` file when Falco Talon runs outside Kubernetes.
