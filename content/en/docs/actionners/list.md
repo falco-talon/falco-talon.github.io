@@ -329,6 +329,40 @@ Example:
       - "blue-ns"
 ```
 
+## `calico`
+
+The category `calico` can be initialized with a `kubeconfig` file when Falco Talon runs outside Kubernetes.
+
+### `cilium:networkpolicy`
+
+* Description: **Create a Cilium Network Policy to block the egress traffic to a specific IP**
+* Continue: `true`
+* Parameters:
+  * `allow_cidr`: list of CIDR to allow anyway (eg: private subnets) (default: 0.0.0.0/0)
+  * `allow_namespaces`: list of namespaces to allow anyway
+* Required fields:
+  * `fd.sip` or `fd.rip`
+* Use context: `false`
+* Output: `n/a`
+* Source: `syscalls`
+
+Example:
+```yaml
+- action: Create Cilium netpol
+  actionner: cilium:networkpolicy
+  parameters:
+    allow_cidr:
+      - "192.168.1.0/24"
+      - "172.17.0.0/16"
+    allow_namespaces:
+      - "green-ns"
+      - "blue-ns"
+```
+
+## `aws`
+
+The category `aws` will be initialized following [default provider chain](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).
+
 ### `aws:lambda`
 
 * Description: **Invoke an AWS lambda forwarding the Falco event payload**
