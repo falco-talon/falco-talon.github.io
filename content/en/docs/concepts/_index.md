@@ -39,9 +39,10 @@ or
 
 Represents a possible threat or suspicious action detected by `Falco` and is sent to the outputs.
 
-- [BPF Program Not Profiled](https://thomas.labarussias.fr/falco-rules-explorer/?source=syscalls&hash=1f6f21e3cf389d5b1970006c3acc1a92)
-- [Service Account Created in Kube Namespace](https://thomas.labarussias.fr/falco-rules-explorer/?source=k8s_audit&hash=b5a8cad895c664de9e626483fe9bbc91)
-- [Exfiltrating Artifacts via Kubernetes Control Plane](https://thomas.labarussias.fr/falco-rules-explorer/?source=syscalls&hash=895b0567a065496ab1c5e877c9afc8c7)
+For example:
+  - [BPF Program Not Profiled](https://thomas.labarussias.fr/falco-rules-explorer/?source=syscalls&hash=1f6f21e3cf389d5b1970006c3acc1a92)
+  - [Service Account Created in Kube Namespace](https://thomas.labarussias.fr/falco-rules-explorer/?source=k8s_audit&hash=b5a8cad895c664de9e626483fe9bbc91)
+  - [Exfiltrating Artifacts via Kubernetes Control Plane](https://thomas.labarussias.fr/falco-rules-explorer/?source=syscalls&hash=895b0567a065496ab1c5e877c9afc8c7)
 
 ### Rule
 
@@ -71,6 +72,18 @@ See [here](/docs/actionners) to know more.
 It defines what outputs to notify with the result of the action.
 
 See [here](/docs/notifiers) to know more.
+
+### Output
+
+Some `actionners` allow or require an `output` section. The `output` is the where target to store the resulting artifact that might has been created by the `actionner`. For example, the `actionner` `kubernetes:log` just allows to set an `output` to store the collected logs, if nothing is set, then they are printed in the stdout inside the log line; the `kubernetes:download` on its side requires an output to store the downloaded file from the pod.
+
+See [here](/docs/outputs) to know more.
+
+### Context
+
+The `context` is composed of elements from the original `Falco` event, from `Falco Talon` and other sources, that can be used to dynamically configure the `actions`. Some `actionners` allow also to specify extra sources of information. 
+
+See [here](/docs/actionners/contexts) to know more.
 
 ### Deduplication
 

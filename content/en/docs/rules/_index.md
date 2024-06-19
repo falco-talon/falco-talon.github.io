@@ -58,13 +58,18 @@ The syntax for the rules files is:
       continue: <bool>
       ignore_errors: <bool>
       parameters:
-        <string>: <string>
+        <string>: <interface{}>
         <string>:
-          - <string>
-          - <string>
+          - <interface{}>
+          - <interface{}>
         <string>:
-          <string>: <string>
-          <string>: <string>
+          <string>: <interface{}>
+          <string>: <interface{}>
+      output:
+        target: <string,mandatory>
+        parameters:
+          <string>: <interface{}>
+          <string>: <interface{}>
   notifiers:
     - <string>
     - <string>
@@ -83,6 +88,9 @@ For the `action` block, the settings are:
 * `continue`: if `true`, no more action are applied after this one (each actionner has its own default value).
 * `ignore_errors`: if `true`, ignore the errors and avoid to stop at this action.
 * `parameters`: key:value map of parameters for the action. value can be a string, an array (slice) or a map.
+* `output`: defines the output to use to store the result artifact
+  * `target`: the name of the kind of output to use
+  * `parameters`: key:value map of parameters for the output. value can be a string, an array (slice) or a map.
 
 ## Rule
 
@@ -135,6 +143,15 @@ Finally, the two actions are initiated as instant response actions when the matc
     rules:
       - Unexpected outbound connection destination
   actions:
+    - action: Get last logs
+      actionner: kubernetes:log
+      parameters:
+        tail_lines: 10
+      output:
+        target: aws:s3
+        parameters:
+          bucket: my-bucket
+          prefix: /logs/
     - action: Disable outbound connections
       ignore_errors: true
     - action: Terminate Pod # ref to a re-usable action

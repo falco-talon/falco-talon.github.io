@@ -27,6 +27,14 @@ Example:
     labels:
       suspicious: true
 
+- action: Get logs
+  actionner: kubernetes:log
+  output:
+    target: minio:s3
+    parameters:
+      bucket: my-bucket
+      prefix: /logs/
+
 - action: Run Lambda
   actionner: aws:lambda
   parameters:
@@ -38,12 +46,16 @@ Example:
 ```
 
 {{% alert title="Warning" color="warning" %}}
-Some actionners have by default the `Continue: false` setting by default, this stops the evaluation of the next actions of the rule. It can be overridden.
+Some actionners have by default the setting `Continue` set by default to `false`, this stops the evaluation of the next actions of the rule. It can be overridden.
 {{% /alert %}}
 
 ### Contexts
 
-Some `actionners` allow to specify which sources to use to inject elements in the `context` field of the event payload, before triggering the action.
+Some `actionners` allow to specify which sources to use to inject elements in the `context` field of the event payload, before triggering the action. The context of `Falco Talon` (the rule name, the action name, the action parameters, etc) are injected anyway.
+
+### Outputs
+
+Some `actionners` allow or require to specify a destination for the generated/collected artifacts. See [here](/docs/outputs) to know more.
 
 ### aws
 
