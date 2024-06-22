@@ -5,7 +5,7 @@ description: >
   Available actionners
 ---
 
-The `required fields` are the field elements that must be present in your Falco events to allow the actionner to do its work.
+The `required fields` are the field elements that must be present in your Falco event to allow the actionner to do its work.
 
 ## `kubernetes`
 
@@ -23,7 +23,8 @@ The category `kubernetes` can be initialized with a `kubeconfig` file when Falco
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
-* Accept Contexts: `false`
+* Use context: `false`
+* Output: `n/a`
 * Source: `syscalls`
 
 Example:
@@ -43,11 +44,12 @@ Example:
 * Continue: `true`
 * Parameters: 
   * `level`: level to apply the apply the labels, can be `node` or `pod` (default) 
-  * `labels`: key:value map of labels to add/modify/delete (empty value means label deletion)
+  * `labels`: (required) key:value map of labels to add/modify/delete (empty value means label deletion)
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
-* Accept Contexts: `false`
+* Use context: `false`
+* Output: `n/a`
 * Source: `syscalls`
 
 Example:
@@ -70,7 +72,8 @@ Example:
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
-* Accept Contexts: `false`
+* Use context: `false`
+* Output: `n/a`
 * Source: `syscalls`
 
 Example:
@@ -92,11 +95,12 @@ Example:
 * Continue: `true`
 * Parameters:
   * `shell`: SHELL used to run the command (default: `/bin/sh`)
-  * `command` Command to run
+  * `command`: (required) Command to run
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
-* Accept Contexts: `true`
+* Use context: `true`
+* Output: `n/a`
 * Source: `syscalls`
 
 Example:
@@ -105,42 +109,11 @@ Example:
   actionner: kubernetes:exec
   parameters:
     shell: /bin/bash
-    command: "ps awxuf"
+    command: "cat ${FD_NAME}"
 ```
 
 {{% alert title="Info" color="info" %}}
-The fields of the events and the context of the Falco Talon rule are exported as environment variables and can be used in the command.
-
-The non exhaustive list contains:
-- `PRIORITY`: the priority of the Falco events
-- `HOSTNAME`: the hostname where the Falco event occured
-- `SOURCE`: the source for the Falco event
-- `RULE`: the name of the rule that created the Falco event
-- `TAGS`: a comma separated list of the tags associated with the Falco event
-- `FALCO-TALON_RULE`: the name of the Falco Talon rule that matches
-- `FALCO-TALON_RULE_CONTINUE`: if the Falco Talon rule allows to continue or not
-- `FALCO-TALON_RULE_DRYRUN`: if the Falco Talon rule dry runs or not
-- `FALCO-TALON_RULE_ACTION`: the name of the action triggered by the Falco Rule
-- `FALCO-TALON_RULE_ACTION_CONTINUE`: if the action triggered by the Falco Rule allows to continue or not
-- `FALCO-TALON_RULE_ACTION_IGNORE_ERRORS`: if the action triggered by the Falco Rule ignores the errors or not
-- `FALCO-TALON_RULE_ACTION_PARAMETERS`: a json payload with parameters of the action triggered by the Falco Rule
-- `FALCO-TALON_RULE_ACTIONNER`: the actionner used by the action triggered by the Falco Rule
-- All the `OutputFields` of the Falco event are exported, in uppercase, with the dots replaced by `_` and the brackets `[ ]` removed, examples:
-  - `fd.name`: `FD_NAME`
-  - `proc.args[0]`: `PROC_ARGS_0`
-- For the context fields, for example:
-  - For `aws`:
-    - `AWS_INSTANCE_PROFILE_ARN`
-    - `AWS_INSTANCE_PROFILE_ID`
-    - `AWS_REGION`
-  - For `k8snode`:
-    - `NODE_HOSTNAME`
-    - `NODE_INSTANCETYPE`
-    - `NODE_ROLE`
-    - `NODE_NODE`
-    - `NODE_TOPOLOGY_ZONE`
-    - `NODE_TOPOLOGY_REGION`
-    - `NODE_SPEC_PROVIDEDID`
+For the available contexts, see [here](/docs/actionners/contexts).
 {{% /alert %}}
 
 ### `kubernetes:script`
@@ -154,7 +127,8 @@ The non exhaustive list contains:
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
-* Accept Contexts: `true`
+* Use context: `true`
+* Output: `n/a`
 * Source: `syscalls`
 
 Example:
@@ -167,41 +141,11 @@ Example:
       ps awxuf
       netstat -lpauten
       top -n 1
+      cat ${FD_NAME}
 ```
 
 {{% alert title="Info" color="info" %}}
-The fields of the events and the context of the Falco Talon rule are exported as environment variables and can be used in the script.
-
-The non exhaustive list contains:
-- `PRIORITY`: the priority of the Falco events
-- `HOSTNAME`: the hostname where the Falco event occured
-- `SOURCE`: the source for the Falco event
-- `RULE`: the name of the rule that created the Falco event
-- `TAGS`: a comma separated list of the tags associated with the Falco event
-- `FALCO-TALON_RULE`: the name of the Falco Talon rule that matches
-- `FALCO-TALON_RULE_CONTINUE`: if the Falco Talon rule allows to continue or not
-- `FALCO-TALON_RULE_DRYRUN`: if the Falco Talon rule dry runs or not
-- `FALCO-TALON_RULE_ACTION`: the name of the action triggered by the Falco Rule
-- `FALCO-TALON_RULE_ACTION_CONTINUE`: if the action triggered by the Falco Rule allows to continue or not
-- `FALCO-TALON_RULE_ACTION_IGNORE_ERRORS`: if the action triggered by the Falco Rule ignores the errors or not
-- `FALCO-TALON_RULE_ACTION_PARAMETERS`: a json payload with parameters of the action triggered by the Falco Rule
-- `FALCO-TALON_RULE_ACTIONNER`: the actionner used by the action triggered by the Falco Rule
-- All the `OutputFields` of the Falco event are exported, in uppercase, with the dots replaced by `_` and the brackets `[ ]` removed, examples:
-  - `fd.name`: `FD_NAME`
-  - `proc.args[0]`: `PROC_ARGS_0`
-- For the context fields, for example:
-  - For `aws`:
-    - `AWS_INSTANCE_PROFILE_ARN`
-    - `AWS_INSTANCE_PROFILE_ID`
-    - `AWS_REGION`
-  - For `k8snode`:
-    - `NODE_HOSTNAME`
-    - `NODE_INSTANCETYPE`
-    - `NODE_ROLE`
-    - `NODE_NODE`
-    - `NODE_TOPOLOGY_ZONE`
-    - `NODE_TOPOLOGY_REGION`
-    - `NODE_SPEC_PROVIDEDID`
+For the available contexts, see [here](/docs/actionners/contexts).
 {{% /alert %}}
 
 ### `kubernetes:log`
@@ -209,10 +153,12 @@ The non exhaustive list contains:
 * Description: **Get logs from a pod**
 * Continue: `true`
 * Parameters:
-  * `tail_lines`: The number of lines from the end of the logs to show (default: `1000`)
+  * `tail_lines`: The number of lines from the end of the logs to show (default: `20`)
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
+* Use context: `false`
+* Output: `optionnal` (if no `output` is specified, the logs are printed in the log line)
 * Source: `syscalls`
 
 Example:
@@ -221,6 +167,65 @@ Example:
   actionner: kubernetes:log
   parameters:
     tail_lines: 200
+  output:
+    target: aws:s3
+    parameters:
+      bucket: my-bucket
+      prefix: /logs/
+```
+
+### `kubernetes:download`
+
+* Description: **Download a file from a pod**
+* Continue: `true`
+* Parameters:
+  * `file`: (required) The full path of the file to download
+* Required fields:
+  * `k8s.pod.name`
+  * `k8s.ns.name`
+* Use context: `true`
+* Output: `required`
+* Source: `syscalls`
+
+Example:
+```yaml
+- action: Get logs of the pod
+  actionner: kubernetes:download
+  parameters:
+    tail_lines: 200
+  output:
+    target: aws:s3
+    parameters:
+      bucket: my-bucket
+      prefix: /files/
+```
+
+### `kubernetes:tcpdump`
+
+* Description: **Capture the network packets for the pod**
+* Continue: `true`
+* Parameters:
+  * `duration`: duration in seconds of the capture (default: 5)
+  * `snaplen`: number of bytes captured for each packet (default: 4096)
+* Required fields:
+  * `k8s.pod.name`
+  * `k8s.ns.name`
+* Use context: `false`
+* Output: `required`
+* Source: `syscalls`
+
+Example:
+```yaml
+- action: Get logs of the pod
+  actionner: kubernetes:tcpdump
+  parameters:
+    duration: 10
+    snaplen: 1024
+  output:
+    target: aws:s3
+    parameters:
+      bucket: my-bucket
+      prefix: /captures/
 ```
 
 ### `kubernetes:delete`
@@ -232,7 +237,8 @@ Example:
   * `ka.target.resource`
   * `ka.target.name`
   * `ka.target.namespace`
-* Accept Contexts: `false`
+* Use context: `false`
+* Output: `n/a`
 * Source: `k8saudit`
 
 Example:
@@ -249,7 +255,7 @@ The managed resources are:
 - configmap
 - secret
 - deployment
-- daeomonset
+- daemonset
 - service
 - serviceaccount  
 - replicaset
@@ -267,7 +273,8 @@ The managed resources are:
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
-* Accept Contexts: `false`
+* Use context: `false`
+* Output: `n/a`
 * Source: `syscalls`
 
 Example:
@@ -289,7 +296,8 @@ Example:
 * Required fields:
   * `k8s.pod.name`
   * `k8s.ns.name`
-* Accept Contexts: `false`
+* Use context: `false`
+* Output: `n/a`
 * Source: `syscalls`
 
 Example:
@@ -312,7 +320,8 @@ The category `calico` can be initialized with a `kubeconfig` file when Falco Tal
   * `order`: order of the network policy
 * Required fields:
   * `fd.sip` or `fd.rip`
-* Accept Contexts: `false`
+* Use context: `false`
+* Output: `n/a`
 * Source: `syscalls`
 
 Example:
@@ -341,7 +350,8 @@ Example:
   * `sts:getCallerIdentity`
   * `lambda:InvokeFunction`
   * `lambda:GetFunction`
-* Accept Contexts: `true`
+* Use context: `true`
+* Output: `n/a`
 * Source: `any`
 
 Example:
@@ -353,3 +363,7 @@ Example:
     aws_lambda_alias_or_version: $LATEST
     aws_lambda_invocation_type: RequestResponse
 ```
+
+{{% alert title="Info" color="info" %}}
+For the available contexts, see [here](/docs/actionners/contexts).
+{{% /alert %}}
