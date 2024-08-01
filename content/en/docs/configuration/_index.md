@@ -30,10 +30,13 @@ The static configuration of `Falco Talon` is set with a `.yaml` file (default: `
 | `minio.access_key`                  | `MINIO_ACCESS_KEY`                  |    n/a    | Access Key to use, it should be specified along **minio.secret_key**                                        |
 | `minio.secret_key`                  | `MINIO_SECRET_KEY`                  |    n/a    | Secret Key to use, it should be specified along **minio.access_key**                                        |
 | `minio.use_ssl`                     | `MINIO_USE_SSL`                     |  `false`  | Use SSL                                                                                                     |
-| `otel.enabled`                  | `OTEL_ENABLED`                  |    `false`    |  Whether or not to enable OTEL collector trace forwarding                                       |
-| `otel.collector_port`                  | `OTEL_COLLECTOR_PORT`                  |    `4317`    |  Port to forward OTEL collector traces                                       |
-| `otel.collector_endpoint`                  | `OTEL_COLLECTOR_ENDPOINT`                  |    `localhost`    |  Endpoint to forward OTEL collector traces                                       |
-| `otel.collector_use_insecure_grpc`                  | `OTEL_COLLECTOR_USE_INSECURE_GRPC`                  |    `false`    |  Whether or not to use insecure gRPC when forwarding traces to OTEL collector                                       |
+| `otel.enabled`                      | `OTEL_ENABLED`                      |  `false`  |  Whether or not to enable OTEL collector trace forwarding                                       
+|
+| `otel.collector_port`               | `OTEL_COLLECTOR_PORT`               |  `4317`   |  Port to forward OTEL collector traces                                       
+|
+| `otel.collector_endpoint`           | `OTEL_COLLECTOR_ENDPOINT`           |`localhost`|  Endpoint to forward OTEL collector traces                                       
+|
+| `otel.collector_use_insecure_grpc`  | `OTEL_COLLECTOR_USE_INSECURE_GRPC`  |  `false`  |  Whether or not to use insecure gRPC when forwarding traces to OTEL collector                                       |
 
 #### Example
 
