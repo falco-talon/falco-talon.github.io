@@ -30,6 +30,10 @@ The static configuration of `Falco Talon` is set with a `.yaml` file (default: `
 | `minio.access_key`                  | `MINIO_ACCESS_KEY`                  |    n/a    | Access Key to use, it should be specified along **minio.secret_key**                                        |
 | `minio.secret_key`                  | `MINIO_SECRET_KEY`                  |    n/a    | Secret Key to use, it should be specified along **minio.access_key**                                        |
 | `minio.use_ssl`                     | `MINIO_USE_SSL`                     |  `false`  | Use SSL                                                                                                     |
+| `otel.enabled`                  | `OTEL_ENABLED`                  |    `false`    |  Whether or not to enable OTEL collector trace forwarding                                       |
+| `otel.collector_port`                  | `OTEL_COLLECTOR_PORT`                  |    `4317`    |  Port to forward OTEL collector traces                                       |
+| `otel.collector_endpoint`                  | `OTEL_COLLECTOR_ENDPOINT`                  |    `localhost`    |  Endpoint to forward OTEL collector traces                                       |
+| `otel.collector_use_insecure_grpc`                  | `OTEL_COLLECTOR_USE_INSECURE_GRPC`                  |    `false`    |  Whether or not to use insecure gRPC when forwarding traces to OTEL collector                                       |
 
 #### Example
 
@@ -56,6 +60,12 @@ aws:
   region: <region> # if not specified, default region from provider credential chain will be used
   access_key: <access_key> # if not specified, default access_key from provider credential chain will be used
   secret_key: <secret_key> # if not specified, default secret_key from provider credential chain will be used
+
+otel:
+  enabled: false
+  collector_port: 4317
+  collector_endpoint: localhost
+  collector_use_insecure_grpc: false
 
 minio:
   endpoint: <endpoint> # endpoint
