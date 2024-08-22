@@ -7,7 +7,7 @@ description: >
 
 The `context` is composed of elements from the original `Falco` event, from `Falco Talon` and other sources, these elements can be used to dynamically configure the `actions` to perform. They are all exposed as environment variables that can be used as tokens to replace in the `parameters` of the `actions`.
 
-Except those from `Falco`, all the informations are also injected into a `context` section in the original payload (JSON) before the run of the action, it's useful for the `actionners` using a third party system (ie: `aws:lambda`) to have the original `Falco` event and the context of what `Falco Talon` does.
+Except those from `Falco`, all the informations are also injected into a `context` section in the original payload (JSON) before the run of the action, it's useful for the `actionners` using a third party system (ie: `aws:lambda`) to have the original `Falco` event and the context of what `Falco Talon` did.
 
 Example:
 ```json
@@ -69,7 +69,7 @@ The exposed env vars concerning `Falco` are exported as environment variables:
 - All the `OutputFields` of the Falco event are exported, in uppercase, with the dots replaced by `_` and the brackets `[ ]` removed, examples:
   - `fd.name` > `FD_NAME`
   - `proc.args[0]` > `PROC_ARGS_0`
-  
+
 ### Falco Talon
 
 The exposed env vars concerning `Falco` are:
@@ -103,7 +103,7 @@ As env vars:
   - `AWS_INSTANCE_PROFILE_ARN`
   - `AWS_INSTANCE_PROFILE_ID`
   - `AWS_REGION`
-  
+
 #### k8snode
 
 For injecting some informations retrieved from the node, use the source: `k8snode`.

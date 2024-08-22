@@ -21,9 +21,9 @@ If the setting `watch_rules` is set to `true`, `Falco Talon` watches the rules u
 The syntax for the rules files is:
 
 ```yaml
-- action: <string,mandatory>
+- action: <string,required>
   description: <string>
-  actionner: <string,mandatory>
+  actionner: <string,required>
   continue: <bool>
   ignore_errors: <bool>
   parameters:
@@ -35,7 +35,7 @@ The syntax for the rules files is:
       <string>: <string>
       <string>: <string>
 
-- rule: <string,mandatory>
+- rule: <string,required>
   description: <string>
   match:
     rules:
@@ -51,25 +51,25 @@ The syntax for the rules files is:
   continue: <bool>
   dry_run: <bool>
   actions:
-    - action: <string,mandatory>
-    - action: <string,mandatory>
+    - action: <string,required>
+    - action: <string,required>
       description: <string>
-      actionner: <string,mandatory>
+      actionner: <string,required>
       continue: <bool>
       ignore_errors: <bool>
       parameters:
-        <string>: <interface{}>
+        <string>: <any>
         <string>:
-          - <interface{}>
-          - <interface{}>
+          - <any>
+          - <any>
         <string>:
-          <string>: <interface{}>
-          <string>: <interface{}>
+          <string>: <any>
+          <string>: <any>
       output:
-        target: <string,mandatory>
+        target: <string,required>
         parameters:
-          <string>: <interface{}>
-          <string>: <interface{}>
+          <string>: <any>
+          <string>: <any>
   notifiers:
     - <string>
     - <string>
@@ -82,36 +82,39 @@ The rules files contain 2 types of blocks:
 ## Action
 
 For the `action` block, the settings are:
-* `action`: (*mandatory*) name of action to trigger
+* `action`: (*required*) name of action to trigger
 * `description`: description of the action (for user only)
 * `actionner`: name of the actionner to use
-* `continue`: if `true`, no more action are applied after this one (each actionner has its own default value).
+* `continue`: if `true`, no more action are applied after this one (each actionner has its own default value)
 * `ignore_errors`: if `true`, ignore the errors and avoid to stop at this action.
-* `parameters`: key:value map of parameters for the action. value can be a string, an array (slice) or a map.
-* `output`: defines the output to use to store the result artifact
-  * `target`: the name of the kind of output to use
-  * `parameters`: key:value map of parameters for the output. value can be a string, an array (slice) or a map.
+* `parameters`: key:value map of parameters for the action. value can be a string, an array (slice) or a map
+* `output`: defines where to store the artifact that might have been created/downloaded by the actionner
+  * `target`: the name of the target used as output
+  * `parameters`: key:value map of parameters for the output. value can be a string, an array (slice) or a map
 
 ## Rule
 
 For the `rule` block, the settings are:
-* `rule`: (*mandatory*) Name of your rule
+* `rule`: (*required*) Name of your rule
 * `description`: description of the action (for user only)
 * `match`: the section to define the criterias to match
   * `rules`: (*list*) (`OR` logic) Falco rules to match. If empty, all rules match.
-  * `priority`: Priority to match. If empty, all priorities match. Syntax is like: `>=Critical`, `<Warning`, `Debug`.
+  * `priority`: Priority to match. If empty, all priorities match. Syntax is like: `>=Critical`, `<Warning`, `Debug`
   * `tags`: (*list*) (`OR` logic) Comma separated lists of Tags to match (`AND` logic). If empty, all tags match.
-  * `output_fields`: (*list*) (`OR` logic) Comma separated lists of key:comparison:value for Output fields to match (`AND` logic). If emtpy, all output fields match.
-* `actions`: the list of actions to sequentially run, they can refer to an `action` block or defined locally 
-  * `action`: (*mandatory*) name of action to trigger, can refer to an `action` block
+  * `output_fields`: (*list*) (`OR` logic) Comma separated lists of key:comparison:value for Output fields to match (`AND` logic). If emtpy, all output fields match
+* `actions`: the list of actions to sequentially run, they can refer to an `action` block or be defined locally 
+  * `action`: (*required*) name of action to trigger, can refer to an `action` block
   * `description`: description of the action (for user only)
   * `actionner`: name of the actionner to use
-  * `continue`: if `true`, no more action are applied after this one (each actionner has its own default value).
-  * `ignore_errors`: if `true`, ignore the errors and avoid to stop at this action.
-  * `parameters`: key:value map of parameters for the action. value can be a string, an array (slice) or a map.
-* `continue`: if `true`, no more rule are compared after the rule has been triggered (default is `true`).
-* `dry_run`: if `true`: the actions are not ran (default: `false`).
-* `notifiers`: list of notifiers to enabled for the action, in addition with the defaults.
+  * `continue`: if `true`, no more action are applied after this one (each actionner has its own default value)
+  * `ignore_errors`: if `true`, ignore the errors and avoid to stop at this action
+  * `parameters`: key:value map of parameters for the action. value can be a string, an array (slice) or a map
+  * `output`: defines where to store the artifact that might have been created/downloaded by the actionner
+    * `target`: the name of the target used as output
+    * `parameters`: key:value map of parameters for the output. value can be a string, an array (slice) or a map
+* `continue`: if `true`, no more rule are compared after the rule has been triggered (default is `true`)
+* `dry_run`: if `true`: the actions are not ran (default: `false`)
+* `notifiers`: list of notifiers to enabled for the action, in addition with the defaults
 
 ## Example
 
