@@ -13,7 +13,7 @@ Two main config files are provided:
 * `rules.yaml` contains the rules to set
 
 {{% alert title="Info" color="info" %}}
-If your `values.yaml` contains `watchRules: true`, the changes in the rules are detected and `Falco Talon` pods will automatically reload their configuration.
+If your `values.yaml` contains `watchRules: true`, the changes in the rules are detected and the `Falco Talon` pods will automatically reload their configuration.
 {{% /alert %}}
 
 ### Clone and install

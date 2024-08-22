@@ -37,7 +37,7 @@ or
 
 ### Event
 
-Represents a possible threat or suspicious action detected by `Falco` and is sent to the outputs.
+Represents a possible threat or suspicious action detected by `Falco` and forwarded to its outputs (file, http, program, stdout).
 
 For example:
   - [BPF Program Not Profiled](https://thomas.labarussias.fr/falco-rules-explorer/?source=syscalls&hash=1f6f21e3cf389d5b1970006c3acc1a92)
