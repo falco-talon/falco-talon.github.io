@@ -369,7 +369,7 @@ Example:
       - "blue-ns"
 ```
 
-## aws
+## `aws`
 
 ### `aws:lambda`
 
