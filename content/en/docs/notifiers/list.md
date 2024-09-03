@@ -5,15 +5,29 @@ description: >
   Available notifiers
 ---
 
-## K8s Events
+## `k8sevents`
 
 This notifiers creates a [k8s event](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/##event-v1-events-k8s-io) in the target resource namespace.
 
-#### Settings
+### Parameters
 
 No configuration is requested.
 
-#### Result
+### Permissions
+
+```yaml
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - get
+  - update
+  - patch
+  - create
+```
+
+### Result
 
 ```
 LAST SEEN   TYPE     REASON                                    OBJECT                      MESSAGE
@@ -55,9 +69,9 @@ source:
 type: Normal
 ```
 
-## Slack
+## `slack`
 
-#### Settings
+### Parameters
 
 |    Setting    |                                      Default                                      |        Description         |         |
 | ------------- | --------------------------------------------------------------------------------- | -------------------------- | ------- |
@@ -67,7 +81,7 @@ type: Normal
 | `footer`      | `https://github.com/Issif/falco-talon`                                            | Footer for messages        |         |
 | `format`      | `long`                                                                            | Format for messages (`long | short`) |
 
-#### Example
+### Example
 
 ```yaml
 notifiers:
@@ -79,7 +93,7 @@ notifiers:
     format: long
 ```
 
-#### Results
+### Results
 
 with `format: short`:
 
@@ -90,9 +104,9 @@ with `format: long`:
 ![images/slack_long.png](../images/slack_long.png)
 
 
-## Loki
+## `loki`
 
-#### Settings
+### Parameters
 
 |     Setting      | Default |         Description          |
 | ---------------- | ------- | ---------------------------- |
@@ -102,11 +116,7 @@ with `format: long`:
 | `tenant`         | n/a     | Add the Tenant header        |
 | `custom_headers` | n/a     | Custom HTTP Headers          |
 
-#### Result
-
-![images/loki_grafana.png](../images/loki_grafana.png)
-
-#### Example
+### Example
 
 ```yaml
 notifiers:
@@ -116,9 +126,13 @@ notifiers:
     api_key: "xxxxx"
 ```
 
+### Result
+
+![images/loki_grafana.png](../images/loki_grafana.png)
+
 ## Elasticsearch
 
-#### Settings
+### Parameters
 
 |         Setting         |    Default    |                                    Description                                    |
 | ----------------------- | ------------- | --------------------------------------------------------------------------------- |
@@ -132,7 +146,7 @@ notifiers:
 | `number_of_replicas`    | `3`           | Number of replicas for the index (if `create_index_template` is `true`)           |
 | `custom_headers`        | n/a           | Custom HTTP Headers                                                               |
 
-#### Example
+### Example
 
 ```yaml
 notifiers:
@@ -143,9 +157,9 @@ notifiers:
     number_of_replicas: 1
 ```
 
-## SMTP
+## `smtp`
 
-#### Settings
+### Parameters
 
 |   Setting   | Default |              Description              |
 | ----------- | ------- | ------------------------------------- |
@@ -157,7 +171,7 @@ notifiers:
 | `format`    | `html`  | Format of the email (`text`, `html`)  |
 | `tls`       | `false` | Use TLS connection                    |
 
-#### Example
+### Example
 
 ```yaml
 notifiers:
@@ -171,7 +185,7 @@ notifiers:
     tls: false
 ```
 
-#### Results
+### Results
 
 with `format: html`:
 
@@ -181,9 +195,9 @@ with `format: text`:
 
 ![images/smtp_text.png](../images/smtp_text.png)
 
-## Webhook
+## `webhook`
 
-#### Settings
+### Parameters
 
 |     Setting      |              Default              |     Description     |
 | ---------------- | --------------------------------- | ------------------- |
@@ -193,7 +207,7 @@ with `format: text`:
 | `content_type`   | `application/json; charset=utf-8` | Content Type        |
 | `custom_headers` | n/a                               | Custom HTTP Headers |
 
-#### Example
+### Example
 
 ```yaml
 notifiers:
