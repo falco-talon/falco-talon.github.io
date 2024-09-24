@@ -675,11 +675,12 @@ rules:
 
 #### Parameters
 
-* `grace_period_seconds`: The duration in seconds before the pod should be deleted. The value zero indicates delete immediately.
 * `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated.
 * `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated.
 * `min_healthy_replicas`: Minimum number of healthy pods to allow the termination, can be an absolute or % value (the value must be a quoted string).
 * `ignore_error`: If true, errors during the drain will be ignored, resulting in a successful action call. Used to control subsequent actions flow.
+* `max_wait_period`: Amount of time to wait for eviction. If not set, the actionner will immediately return after calling the API for eviction.
+* `wait_period_excluded_namespaces`: List of namespaces to exclude from the waiting period. If set, pods on those namespaces won't be part of the waiting process.
 
 #### Permissions
 
