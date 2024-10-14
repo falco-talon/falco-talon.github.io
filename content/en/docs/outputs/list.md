@@ -80,6 +80,40 @@ The name of the output has to be used as value for the `target` field of the `ou
       region: eu-west-1
 ```
 
+## `gcp:gcs`
+
+* Name: `gcs`
+* Category: `gcp`
+* Description: **Store on Google Cloud Storage**
+
+### Parameters
+
+* `bucket`: (required) Destination bucket
+* `prefix`: Prefix for the object
+
+### Permissions
+
+```yaml
+storage.objects.create
+storage.objects.get
+storage.objects.list
+storage.objects.update
+```
+
+### Example
+
+```yaml
+- action: Get logs of the pod
+  actionner: kubernetes:download
+  parameters:
+    tail_lines: 200
+  output:
+    target: gcp:gcs
+    parameters:
+      bucket: falco-talon
+      prefix: files
+```
+
 ## `minio:s3`
 
 * Name: `s3`
