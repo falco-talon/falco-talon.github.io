@@ -29,6 +29,7 @@ The category `kubernetes` can be initialized with a `kubeconfig` file when Falco
 * `grace_period_seconds`: The duration in seconds before the pod should be deleted. The value zero indicates delete immediately.
 * `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated.
 * `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated.
+* `ignore_standalone_pods`: If true, standalone pods (not belonging to any controller) are not terminated.
 * `min_healthy_replicas`: Minimum number of healthy pods to allow the termination, can be an absolute or % value (the value must be a quoted string).
 
 #### Permissions
@@ -944,6 +945,49 @@ rules:
     aws_lambda_name: sample-function
     aws_lambda_alias_or_version: $LATEST
     aws_lambda_invocation_type: RequestResponse
+```
+
+{{% alert title="Info" color="info" %}}
+For the available contexts, see [here](/docs/actionners/contexts).
+{{% /alert %}}
+
+## `gcp`
+
+### `gcp:function`
+
+* Name: `function`
+* Category: `gcp`
+* Description: **Invoke an GCP Function forwarding the Falco event payload**
+* Continue: `true`
+* Required GCP access:
+  * `cloudfunctions.functions.call`
+  * `cloudfunctions.functions.get`
+* Use context: `true`
+* Output: `n/a`
+* Source: `any`
+
+#### Parameters 
+
+* `gcp_function_name`: Function name to call.
+* `gcp_function_location`: Function location.
+* `gcp_function_timeout`: Timeout configuration for HTTP server when calling the function.
+
+#### Permissions
+
+```yaml
+cloudfunctions.functions.call
+cloudfunctions.functions.get
+```
+
+#### Example
+
+```yaml
+- action: Invoke GCP function
+  actionner: gcp:function
+  parameters:
+    gcp_function_name: sample-function
+    gcp_function_location: us-central1
+    gcp_function_timeout: 10
 ```
 
 {{% alert title="Info" color="info" %}}
