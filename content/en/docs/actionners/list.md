@@ -71,7 +71,7 @@ rules:
 
 * Name: `label`
 * Category: `kubernetes`
-* Description: **Add, modify or delete the labels of the pod**
+* Description: **Add, modify or delete the labels of the pod/node**
 * Continue: `true`
 * Required fields:
   * `k8s.pod.name`
@@ -97,6 +97,7 @@ rules:
     - ""
     resources:
     - pods
+    - nodes
     verbs:
     - get
     - update
@@ -111,6 +112,54 @@ rules:
   parameters:
     level: pod
     labels:
+      suspicious: true
+```
+
+### `kubernetes:annotation`
+
+* Name: `annotation`
+* Category: `kubernetes`
+* Description: **Add, modify or delete the annotations of the pod/node**
+* Continue: `true`
+* Required fields:
+  * `k8s.pod.name`
+  * `k8s.ns.name`
+* Use context: `false`
+* Output: `n/a`
+* Source: `syscalls`
+
+#### Parameters
+
+* `level`: level to apply the apply the annotations, can be `node` or `pod` (default) 
+* `annotations`: (required) key:value map of annotations to add/modify/delete (empty value means annotation deletion)
+
+#### Permissions
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: falco-talon
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    - nodes
+    verbs:
+    - get
+    - update
+    - patch
+    - list
+```
+
+#### Example
+```yaml
+- action: Annotate the pod
+  actionner: kubernetes:annotation
+  parameters:
+    level: pod
+    annotations:
       suspicious: true
 ```
 
