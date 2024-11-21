@@ -74,10 +74,11 @@ description = "A tailor-made Response Engine for Falco"
 
 # Comment out if you don't want the "print entire section" link enabled.
 [outputs]
+home = [ "HTML", "print", "RSS", "JSON" ]
 section = ["HTML", "print", "RSS"]
 
 [params]
-copyright = "Thomas Labarussias"
+copyright = "The Falco authors"
 privacy_policy = "https://policies.google.com/privacy"
 
 # First one is picked as the Twitter card image if not set on page.
@@ -99,12 +100,12 @@ version = "0.0"
 
 # A link to latest version of the docs. Used in the "version-banner" partial to
 # point people to the main doc site.
-url_latest_version = "https://issif.github.io/falco-talon"
+url_latest_version = "https://docs.falco-talon.org"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-github_repo = "https://github.com/issif/falco-talon"
+github_repo = "https://github.com/falco-talon/falco-talon.github.io"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
-github_project_repo = "https://github.com/issif/falco-talon"
+github_project_repo = "https://github.com/falcosecurity/falco-talon"
 
 # Specify a value here if your content directory is not in your repo's root directory
 github_subdir = "docs-website"
@@ -117,7 +118,7 @@ github_branch= "main"
 gcs_engine_id = ""
 
 # Enable Lunr.js offline search
-offlineSearch = true
+offlineSearch = false
 
 # Enable syntax highlighting and copy buttons on code blocks with Prism
 prism_syntax_highlighting = true
@@ -127,7 +128,7 @@ prism_syntax_highlighting = true
 #  Set to true to disable breadcrumb navigation.
 breadcrumb_disable = false
 # Set to true to disable the About link in the site footer
-footer_about_disable = true
+footer_about_enable = false
 # Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top navbar
 navbar_logo = true
 # Set to true if you don't want the top navbar to be translucent when over a `block/cover`, like on the homepage.
@@ -144,8 +145,8 @@ sidebar_search_disable = false
 [params.ui.feedback]
 enable = false
 # The responses that the user sees after clicking "yes" (the page was helpful) or "no" (the page was not helpful).
-yes = 'Glad to hear it! Please <a href="https://github.com/issif/falco-talon/issues/new">tell us how we can improve</a>.'
-no = 'Sorry to hear that. Please <a href="https://github.com/issif/falco-talon/issues/new">tell us how we can improve</a>.'
+yes = 'Glad to hear it! Please <a href="https://github.com/falcosecurity/falco-talon/issues/new">tell us how we can improve</a>.'
+no = 'Sorry to hear that. Please <a href="https://github.com/falcosecurity/falco-talon/issues/new">tell us how we can improve</a>.'
 
 # Adds a reading time to the top of each doc.
 # If you want this feature, but occasionally need to remove the Reading time from a single page,
@@ -158,7 +159,7 @@ enable = false
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
 [[params.links.developer]]
   name = "GitHub"
-  url = "https://github.com/issif/falco-talon"
+  url = "https://github.com/falcosecurity/falco-talon"
   icon = "fab fa-github"
   desc = "Development takes place here!"
 [[params.links.developer]]
