@@ -1,12 +1,12 @@
 {
   "name": "Falco-Talon",
   "version": "0.1.0",
-  "description": "Falco Talon, a response engine for Falco",
-  "repository": "github:Falco-Talon/falco-talon",
+  "description": "Falco Talon, a tailor-made response engine for Falco",
+  "repository": "github:falcosecurity/falco-talon",
   "homepage": "https://docs.falco-talon.org",
-  "author": "Thomas Labarussias",
+  "author": "The Falco authors",
   "license": "Apache-2.0",
-  "bugs": "https://github.com/Falco-Talon/falco-talon.github.io/issues",
+  "bugs": "https://github.com/falco-talon/falco-talon.github.io/issues",
   "scripts": {
     "_build": "npm run _hugo-dev --",
     "_check:links": "echo IMPLEMENTATION PENDING for check-links; echo",
