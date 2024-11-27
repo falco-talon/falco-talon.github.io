@@ -7,7 +7,7 @@ tags: [test, sample, docs]
 
 ## Helm
 
-The helm chart is available in this folder [`deployment/helm`](https://github.com/Issif/falco-talon/tree/main/deployment/helm).
+The helm chart is available on the official [`falcosecurity/charts repository`](https://github.com/falcosecurity/charts/tree/master/charts/falco-talon).
 Two main config files are provided:
 * `values.yaml` allows you to configure the static settings of `Falcon Talon` and its deployment
 * `rules.yaml` contains the rules to set
@@ -16,21 +16,25 @@ Two main config files are provided:
 If your `values.yaml` contains `watchRules: true`, the changes in the rules are detected and the `Falco Talon` pods will automatically reload their configuration.
 {{% /alert %}}
 
-### Clone and install
+### Install
 
-Git clone is used to target and create a copy of the `falco-talon` repository:
-
+To install Falco Talon, first add the chart repository:
 ```shell
-git clone https://github.com/Falco-Talon/falco-talon.git
+helm repo add falcosecurity https://falcosecurity.github.io/charts
 ```
 
-Once downloaded, change directory to the Helm folder before running the `helm install` command:
-
-```shell
-cd falco-talon/deployment/helm/
-helm install falco-talon . -n falco --create-namespace
+In case you already have the remote repository configured, updated it:
+```bash 
+helm repo update falcosecurity
 ```
 
-{{% alert title="Warning" color="warning" %}}
-When the project will be more stable and a first release officially out, the helm chart will be available on https://artifacthub.io/
-{{% /alert %}}
+Now, just deploy **falcosecurity/falco-talon** chart:
+
+```shell
+helm upgrade --install falco-talon falcosecurity/falco-talon
+```
+
+After deploying, you can check if pods are running properly:
+```bash
+kubectl get pods -n <namespace> | grep falco-talon
+```
