@@ -29,6 +29,7 @@ The category `kubernetes` can be initialized with a `kubeconfig` file when Falco
 * `grace_period_seconds`: The duration in seconds before the pod should be deleted. The value zero indicates delete immediately.
 * `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated.
 * `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated.
+* `ignore_standalone_pods`: If true, standalone pods (not belonging to any controller) are not terminated.
 * `min_healthy_replicas`: Minimum number of healthy pods to allow the termination, can be an absolute or % value (the value must be a quoted string).
 
 #### Permissions
@@ -71,7 +72,7 @@ rules:
 
 * Name: `label`
 * Category: `kubernetes`
-* Description: **Add, modify or delete the labels of the pod**
+* Description: **Add, modify or delete the labels of the pod/node**
 * Continue: `true`
 * Required fields:
   * `k8s.pod.name`
@@ -97,6 +98,7 @@ rules:
     - ""
     resources:
     - pods
+    - nodes
     verbs:
     - get
     - update
@@ -111,6 +113,54 @@ rules:
   parameters:
     level: pod
     labels:
+      suspicious: true
+```
+
+### `kubernetes:annotation`
+
+* Name: `annotation`
+* Category: `kubernetes`
+* Description: **Add, modify or delete the annotations of the pod/node**
+* Continue: `true`
+* Required fields:
+  * `k8s.pod.name`
+  * `k8s.ns.name`
+* Use context: `false`
+* Output: `n/a`
+* Source: `syscalls`
+
+#### Parameters
+
+* `level`: level to apply the apply the annotations, can be `node` or `pod` (default) 
+* `annotations`: (required) key:value map of annotations to add/modify/delete (empty value means annotation deletion)
+
+#### Permissions
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: falco-talon
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    - nodes
+    verbs:
+    - get
+    - update
+    - patch
+    - list
+```
+
+#### Example
+```yaml
+- action: Annotate the pod
+  actionner: kubernetes:annotation
+  parameters:
+    level: pod
+    annotations:
       suspicious: true
 ```
 
@@ -675,11 +725,12 @@ rules:
 
 #### Parameters
 
-* `grace_period_seconds`: The duration in seconds before the pod should be deleted. The value zero indicates delete immediately.
 * `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated.
 * `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated.
 * `min_healthy_replicas`: Minimum number of healthy pods to allow the termination, can be an absolute or % value (the value must be a quoted string).
 * `ignore_error`: If true, errors during the drain will be ignored, resulting in a successful action call. Used to control subsequent actions flow.
+* `max_wait_period`: Amount of time to wait for eviction. If not set, the actionner will immediately return after calling the API for eviction.
+* `wait_period_excluded_namespaces`: List of namespaces to exclude from the waiting period. If set, pods on those namespaces won't be part of the waiting process.
 
 #### Permissions
 
@@ -943,6 +994,49 @@ rules:
     aws_lambda_name: sample-function
     aws_lambda_alias_or_version: $LATEST
     aws_lambda_invocation_type: RequestResponse
+```
+
+{{% alert title="Info" color="info" %}}
+For the available contexts, see [here](/docs/actionners/contexts).
+{{% /alert %}}
+
+## `gcp`
+
+### `gcp:function`
+
+* Name: `function`
+* Category: `gcp`
+* Description: **Invoke an GCP Function forwarding the Falco event payload**
+* Continue: `true`
+* Required GCP access:
+  * `cloudfunctions.functions.call`
+  * `cloudfunctions.functions.get`
+* Use context: `true`
+* Output: `n/a`
+* Source: `any`
+
+#### Parameters 
+
+* `gcp_function_name`: Function name to call.
+* `gcp_function_location`: Function location.
+* `gcp_function_timeout`: Timeout configuration for HTTP server when calling the function.
+
+#### Permissions
+
+```yaml
+cloudfunctions.functions.call
+cloudfunctions.functions.get
+```
+
+#### Example
+
+```yaml
+- action: Invoke GCP function
+  actionner: gcp:function
+  parameters:
+    gcp_function_name: sample-function
+    gcp_function_location: us-central1
+    gcp_function_timeout: 10
 ```
 
 {{% alert title="Info" color="info" %}}
