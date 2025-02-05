@@ -26,10 +26,10 @@ The category `kubernetes` can be initialized with a `kubeconfig` file when Falco
 
 #### Parameters
 
-* `grace_period_seconds`: The duration in seconds before the pod should be deleted. The value zero indicates delete immediately.
-* `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated.
-* `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated.
-* `ignore_standalone_pods`: If true, standalone pods (not belonging to any controller) are not terminated.
+* `grace_period_seconds`: The duration in seconds before the pod should be deleted. The value zero indicates delete immediately. (default: `0`)
+* `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated. (default: `false`)
+* `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated. (default: `false`)
+* `ignore_standalone_pods`: If true, standalone pods (not belonging to any controller) are not terminated. (default: `false`)
 * `min_healthy_replicas`: Minimum number of healthy pods to allow the termination, can be an absolute or % value (the value must be a quoted string).
 
 #### Permissions
@@ -179,7 +179,7 @@ rules:
 
 #### Parameters
 
-* `allow_cidr`: list of CIDR to allow anyway (eg: private subnets)
+* `allow_cidr`: list of CIDR to allow anyway (eg: private subnets) (default: `0.0.0.0/0`)
 * `allow_namespaces`: list of namespaces to allow anyway
 
 #### Permissions
@@ -317,7 +317,7 @@ For the available contexts, see [here](/docs/actionners/contexts).
 
 #### Parameters
 
-* `shell`: SHELL used to run the script (default; `/bin/sh`)
+* `shell`: SHELL used to run the script (default: `/bin/sh`)
 * `script`: Script to run (use `|` to use multilines) (can't be used at the same time than `file`)
 * `file`: Shell script file (can't be used at the same time than `script`)
 
@@ -487,8 +487,8 @@ rules:
 
 #### Parameters
 
-* `duration`: duration in seconds of the capture (default: 5)
-* `snaplen`: number of bytes captured for each packet (default: 4096)
+* `duration`: duration in seconds of the capture (default: `5`)
+* `snaplen`: number of bytes captured for each packet (default: `4096`)
 
 #### Permissions
 
@@ -725,11 +725,11 @@ rules:
 
 #### Parameters
 
-* `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated.
-* `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated.
+* `ignore_daemonsets`: If true, the pods which belong to a Daemonset are not terminated. (default: `false`)
+* `ignore_statefulsets`: If true, the pods which belong to a Statefulset are not terminated. (default: `false`)
 * `min_healthy_replicas`: Minimum number of healthy pods to allow the termination, can be an absolute or % value (the value must be a quoted string).
-* `ignore_error`: If true, errors during the drain will be ignored, resulting in a successful action call. Used to control subsequent actions flow.
-* `max_wait_period`: Amount of time to wait for eviction. If not set, the actionner will immediately return after calling the API for eviction.
+* `ignore_error`: If true, errors during the drain will be ignored, resulting in a successful action call. Used to control subsequent actions flow. (default: `false`)
+* `max_wait_period`: Amount of time to wait for eviction. If not set, the actionner will immediately return after calling the API for eviction. (default: `0`)
 * `wait_period_excluded_namespaces`: List of namespaces to exclude from the waiting period. If set, pods on those namespaces won't be part of the waiting process.
 
 #### Permissions
@@ -769,6 +769,75 @@ rules:
   actionner: kubernetes:drain
 ```
 
+### `kubernetes:sysdig`
+
+* Name: `sydig`
+* Category: `kubernetes`
+* Description: **Capture the syscalls packets in a pod**
+* Continue: `true`
+* Required fields:
+  * `k8s.pod.name`
+  * `k8s.ns.name`
+* Use context: `false`
+* Output: `n/a`
+* Source: `syscalls`, `k8s_audit`
+
+#### Parameters
+
+* `buffer_size`: Size of the buffer to record for each event (default: `2048`)
+* `duration`: Duration of the capture in seconds (default: `5`)
+* `image`: Image to use (default: `image/sysdig:latest`)
+* `scope`: Scope of the capture, `node` ou `pod` (default)
+
+#### Permissions
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: falco-talon
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    verbs:
+    - get
+    - list
+  - apiGroups:
+    - ""
+    resources:
+    - pods/exec
+    verbs:
+    - get
+    - create
+  - apiGroups:
+    - "batch"
+    resources:
+    - jobs
+    verbs:
+    - get
+    - list
+    - create
+```
+
+#### Example
+
+```yaml
+- action: Capture the syscalls
+  actionner: kubernetes:sysdig
+  parameters:
+    buffer_size: 2048
+    duration: 20
+    image: issif/sysdig:latest
+    scope: pod
+  output:
+    target: aws:s3
+    parameters:
+      bucket: my-bucket
+      prefix: /captures/
+```
+
 ## `calico`
 
 The category `calico` can be initialized with a `kubeconfig` file when Falco Talon runs outside Kubernetes.
@@ -787,7 +856,7 @@ The category `calico` can be initialized with a `kubeconfig` file when Falco Tal
 
 #### Parameters
 
-* `allow_cidr`: list of CIDR to allow anyway (eg: private subnets) (default: 0.0.0.0/0)
+* `allow_cidr`: list of CIDR to allow anyway (eg: private subnets) (default: `0.0.0.0/0`)
 * `allow_namespaces`: list of namespaces to allow anyway
 * `order`: order of the network policy
 
@@ -874,7 +943,7 @@ The category `cilium` can be initialized with a `kubeconfig` file when Falco Tal
 
 #### Parameters
 
-* `allow_cidr`: list of CIDR to allow anyway (eg: private subnets) (default: 0.0.0.0/0)
+* `allow_cidr`: list of CIDR to allow anyway (eg: private subnets) (default: `0.0.0.0/0`)
 * `allow_namespaces`: list of namespaces to allow anyway
 * `order`: order of the network policy
 
@@ -961,8 +1030,8 @@ rules:
 #### Parameters 
 
 * `aws_lambda_name`: Lambda name to call. Lambda must reside in the same region as your default credential provider or static region provided in configuration.
-* `aws_lambda_alias_or_version`: Lambda alias or version to call. (default: $LATEST)
-* `aws_lambda_invocation_type`: Invocation type for Lambda. Accepted values: RequestResponse, Event, DryRun. (default: RequestResponse)
+* `aws_lambda_alias_or_version`: Lambda alias or version to call. (default: `$LATEST`)
+* `aws_lambda_invocation_type`: Invocation type for Lambda. Accepted values: RequestResponse, Event, DryRun. (default: `RequestResponse`)
 
 #### Permissions
 
