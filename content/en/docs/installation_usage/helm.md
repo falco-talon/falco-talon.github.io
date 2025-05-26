@@ -38,3 +38,22 @@ After deploying, you can check if pods are running properly:
 ```bash
 kubectl get pods -n <namespace> | grep falco-talon
 ```
+
+### Installing as a Falco sub-dependency
+
+To install Talon as a Falco sub-dependency like Sidekick, simply change your Falco **values.yaml**:
+```yaml
+falcotalon:
+  enabled: true
+  ## example configuration with rulesOverride
+  config:
+    rulesOverride: |
+      - action: Terminate Pod
+        actionner: kubernetes:terminate
+        parameters:
+          ignore_daemonsets: true
+          ignore_statefulsets: true
+          grace_period_seconds: 20
+```
+
+OBS: This requires version [4.21.3](https://github.com/falcosecurity/charts/blob/falco-4.21.3/charts/falco/Chart.yaml) at least of Falco chart.
