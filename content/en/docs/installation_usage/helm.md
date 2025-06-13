@@ -43,8 +43,10 @@ kubectl get pods -n <namespace> | grep falco-talon
 
 To install Talon as a Falco sub-dependency like Sidekick, simply change your Falco **values.yaml**:
 ```yaml
-falcotalon:
+responseActions:
   enabled: true
+
+falco-talon:
   ## example configuration with rulesOverride
   config:
     rulesOverride: |
@@ -54,6 +56,16 @@ falcotalon:
           ignore_daemonsets: true
           ignore_statefulsets: true
           grace_period_seconds: 20
+      - rule: Terminal shell in container
+        description: >
+          Label the pod outside kube-system and falco namespaces if a shell is started inside
+        match:
+          rules:
+          - Terminal shell in container
+          output_fields:
+          - k8s.ns.name!=kube-system, k8s.ns.name!=falco
+        actions:
+          - action: Terminate Pod
 ```
 
-OBS: This requires version [4.21.3](https://github.com/falcosecurity/charts/blob/falco-4.21.3/charts/falco/Chart.yaml) at least of Falco chart.
+OBS: This requires version [6.0.0](https://github.com/falcosecurity/charts/blob/falco-6.0.0/charts/falco/Chart.yaml) at least of Falco chart.
